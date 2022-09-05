@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', 'RegisterController@register');
-
 Route::middleware('auth:api')->group( function () {
+    Route::get('users/me', 'UserController@me');
+
     Route::resource('products', 'ProductController');
 });

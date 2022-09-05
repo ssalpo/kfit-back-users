@@ -1,37 +1,18 @@
 <?php
 namespace App\Http\Controllers\ApiV1;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 class BaseController extends Controller
 {
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendResponse($result, $message)
+    private function getApiHeaders(): array
     {
-        $response = [
-            'success' => true,
-            'data'    => $result,
-            'message' => $message,
+        return [
+            'Content-Type' => 'application/json',
         ];
-        return response()->json($response, 200);
     }
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendError($error, $errorMessages = [], $code = 404)
+
+    protected function response($data, int $statusCode = 200)
     {
-        $response = [
-            'success' => false,
-            'message' => $error,
-        ];
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-        return response()->json($response, $code);
+        return \response()->json($data, $statusCode, $this->getApiHeaders());
     }
+
 }
