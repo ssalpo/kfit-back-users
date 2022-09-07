@@ -5,6 +5,12 @@ use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
+    public function index(): JsonResponse
+    {
+        $users = User::all();
+        return $this->response($users);
+    }
+
     public function me(Request $request): JsonResponse
     {
         $user = $request->user();

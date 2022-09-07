@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController extends BaseController
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the product.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -20,7 +20,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created product in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -37,7 +37,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified product.
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
@@ -52,7 +52,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified product in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -72,7 +72,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified product from storage.
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse

@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group( function () {
+    Route::get('users', 'UserController@index');
     Route::get('users/me', 'UserController@me');
+
+    Route::post('file/upload', 'FileController@upload');
+    Route::get('file/{folder}/{filename}', 'FileController@file')->name('file.show');
 
     Route::resource('products', 'ProductController');
 });
