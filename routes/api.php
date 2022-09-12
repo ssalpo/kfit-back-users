@@ -2,23 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::middleware('auth:api')->group( function () {
-    Route::get('users', 'UserController@index');
-    Route::get('users/me', 'UserController@me');
+Route::middleware('auth:api')->group(function () {
+    Route::get('/users/me', 'UserController@me');
+    Route::apiResource('/users', 'UserController')->except(['delete']);
 
     Route::post('file/upload', 'FileController@upload');
     Route::get('file/{folder}/{filename}', 'FileController@file')->name('file.show');
 
-    Route::resource('products', 'ProductController');
+    Route::apiResource('products', 'ProductController');
 });

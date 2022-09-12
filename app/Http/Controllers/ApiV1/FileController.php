@@ -3,66 +3,46 @@
 namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\Controller;
-use App\Models\TemporaryFile;
-use Carbon\Carbon;
+use App\Http\Requests\TempFileUploadRequest;
+use App\Http\Resources\TempFileResource;
+use App\Services\TempFileService;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
-    public function file(Request $request, $folder, $filename)
+    /**
+     * @var TempFileService
+     */
+    private $tempFileService;
+
+    public function __construct(TempFileService $tempFileService)
     {
-        $path = 'files/'.$folder.'/'.$filename;
-        $storage = Storage::disk('local');
-
-        if (!$storage->exists($path)) {
-            return response()->json(['errors' => 'File not found'], 404);
-        }
-
-        $mime = $storage->mimeType($path);
-        return response(
-            $storage->get($path), 200, [
-                'Content-Type' => $mime,
-                'Content-Disposition' => 'inline; filename="'.$filename.'"'
-            ]
-        );
+        $this->tempFileService = $tempFileService;
     }
 
-    public function upload(Request $request)
+    /**
+     * Возвращает файл для просмотра
+     *
+     * @throws \Exception
+     */
+    public function file(Request $request, string $folder, string $filename): string
     {
-        $file = $request->file('file');
-
-        if (is_array($file)) {
-            $result = [];
-
-            foreach ($file as $item) {
-                $filename = $this->saveFileToTmpDirectory($item);
-                $result['filename'][] = $filename;
-            }
-
-            return response()->json($result, 200);
-        }
-
-        $filename = $this->saveFileToTmpDirectory($file);
-
-        return response()->json([
-            'filename' => $filename
-        ], 200);
+        return $this->tempFileService->getFileToView($folder, $filename);
     }
 
-    private function saveFileToTmpDirectory(UploadedFile $file)
+    /**
+     * Загружает файл во временную папку
+     *
+     * @param TempFileUploadRequest $request
+     * @return TempFileResource|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws \Exception
+     */
+    public function upload(TempFileUploadRequest $request)
     {
-        $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
-        $file->storeAs('tmp', $filename);
+        $result = $this->tempFileService->uploadFile($request->file('file'));
 
-        $tmpFileDb = new TemporaryFile();
-        $tmpFileDb->id = $filename;
-        $tmpFileDb->user_filename = $file->getClientOriginalName();
-        $tmpFileDb->created_at = Carbon::now();
-        $tmpFileDb->save();
+        if (is_array($result)) return TempFileResource::collection($result);
 
-        return $filename;
+        return new TempFileResource($result);
     }
 }
