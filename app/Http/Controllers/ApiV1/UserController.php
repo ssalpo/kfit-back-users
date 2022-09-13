@@ -21,6 +21,8 @@ class UserController extends Controller
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+
+        $this->middleware('role:admin')->only(['store', 'update']);
     }
 
     /**

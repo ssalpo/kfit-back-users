@@ -21,6 +21,8 @@ class FileController extends Controller
     public function __construct(TempFileService $tempFileService)
     {
         $this->tempFileService = $tempFileService;
+
+        $this->middleware('role:admin')->only(['upload']);
     }
 
     /**
