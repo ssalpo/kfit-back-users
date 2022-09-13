@@ -5,14 +5,24 @@ namespace App\Http\Controllers\ApiV1;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Resources\UserResource;
-use App\Jobs\MoveUserAvatarJob;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserService
+     */
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Возвращает список пользователей
      *
@@ -46,29 +56,23 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request): UserResource
     {
-        $user = User::create($request->validated());
-
-        MoveUserAvatarJob::dispatch($user)->onQueue('avatar');
-
-        return new UserResource($user);
+        return new UserResource(
+            $this->userService->create($request->validated())
+        );
     }
 
     /**
      * Обновляет данные пользователя
      *
-     * @param User $user
+     * @param int $user
      * @param UserEditRequest $request
      * @return UserResource
      */
-    public function update(User $user, UserEditRequest $request): UserResource
+    public function update(int $user, UserEditRequest $request): UserResource
     {
-        $isAvatarChanged = $user->avatar !== $request->avatar;
-
-        $user->update($request->validated());
-
-        if ($isAvatarChanged) MoveUserAvatarJob::dispatch($user)->onQueue('avatar');
-
-        return new UserResource($user->refresh());
+        return new UserResource(
+            $this->userService->update($user, $request->validated())
+        );
     }
 
     /**
