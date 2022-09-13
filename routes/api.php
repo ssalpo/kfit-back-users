@@ -6,8 +6,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/users/me', 'UserController@me');
     Route::apiResource('/users', 'UserController')->except(['destroy']);
 
-    Route::post('file/upload', 'FileController@upload');
-    Route::get('file/{folder}/{filename}', 'FileController@file')->name('file.show');
+    Route::post('files/upload', 'FileController@upload');
+    Route::get('files/{folder}/{filename}', 'FileController@file');
 
     Route::apiResource('products', 'ProductController');
 });

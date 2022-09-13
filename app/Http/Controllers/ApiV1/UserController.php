@@ -24,7 +24,7 @@ class UserController extends Controller
     }
 
     /**
-     * Возвращает список пользователей
+     * Returns a list of users
      *
      * @return AnonymousResourceCollection
      */
@@ -36,7 +36,7 @@ class UserController extends Controller
     }
 
     /**
-     * Возвращает данные текущего авторизованного пользователя
+     * Returns the data of the currently logged in user
      *
      * @param Request $request
      * @return UserResource
@@ -49,7 +49,7 @@ class UserController extends Controller
     }
 
     /**
-     * Добавляет нового пользователя
+     * Adds a new user
      *
      * @param UserStoreRequest $request
      * @return UserResource
@@ -62,7 +62,7 @@ class UserController extends Controller
     }
 
     /**
-     * Обновляет данные пользователя
+     * Updates user data
      *
      * @param int $user
      * @param UserEditRequest $request
@@ -76,7 +76,7 @@ class UserController extends Controller
     }
 
     /**
-     * Просмотр данных пользователя по ID
+     * View user data by ID
      *
      * @param User $user
      * @return UserResource

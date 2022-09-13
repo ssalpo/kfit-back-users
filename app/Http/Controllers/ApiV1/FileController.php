@@ -21,17 +21,18 @@ class FileController extends Controller
     }
 
     /**
-     * Возвращает файл для просмотра
+     * Returns a file to view
      *
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      * @throws \Exception
      */
-    public function file(Request $request, string $folder, string $filename): string
+    public function file(string $folder, string $filename)
     {
         return $this->tempFileService->getFileToView($folder, $filename);
     }
 
     /**
-     * Загружает файл во временную папку
+     * Uploads a file to a temporary folder
      *
      * @param TempFileUploadRequest $request
      * @return TempFileResource|\Illuminate\Http\Resources\Json\AnonymousResourceCollection

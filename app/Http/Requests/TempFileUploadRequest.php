@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\TemporaryFile;
+use App\Constants\TempFile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TempFileUploadRequest extends FormRequest
@@ -28,7 +28,7 @@ class TempFileUploadRequest extends FormRequest
             'file' . $this->markFileAsArray() => [
                 'required',
                 $this->allowedMimes(),
-                "max:" . TemporaryFile::MAX_FILE_SIZE
+                "max:" . TempFile::MAX_FILE_SIZE
             ]
         ];
     }
@@ -40,6 +40,6 @@ class TempFileUploadRequest extends FormRequest
 
     private function allowedMimes(): string
     {
-        return 'mimes:' . implode(',', TemporaryFile::ALLOW_FILE_MIME_TYPES);
+        return 'mimes:' . implode(',', TempFile::ALLOW_FILE_MIME_TYPES);
     }
 }

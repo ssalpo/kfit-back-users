@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\TempFile;
 use App\Models\User;
 use Illuminate\Support\Arr;
 
@@ -18,7 +19,7 @@ class UserService
     }
 
     /**
-     * Добавляет нового пользователя
+     * Adds a new user
      *
      * @param array $data
      * @return mixed
@@ -27,13 +28,13 @@ class UserService
     {
         $user = User::create($data);
 
-        if ($user->avatar) $this->tempFileService->moveAvatarFromTmpFolder($user->avatar);
+        if ($user->avatar) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
 
         return $user;
     }
 
     /**
-     * Обновляет данные пользователя по ID
+     * Update user data by ID
      *
      * @param int $id
      * @param array $data
@@ -47,7 +48,7 @@ class UserService
 
         $user->update($data);
 
-        if ($isAvatarChanged) $this->tempFileService->moveAvatarFromTmpFolder($user->avatar);
+        if ($isAvatarChanged) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
 
         return $user->refresh();
     }
