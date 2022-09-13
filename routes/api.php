@@ -11,3 +11,4 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('products', 'ProductController');
 });
+Route::get('files/image/{filename}/{width}/{height}', 'FileController@image');

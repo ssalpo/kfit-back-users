@@ -7,12 +7,14 @@ use App\Models\TemporaryFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use League\Flysystem\FileNotFoundException;
-use mysql_xdevapi\Exception;
 
 class TempFileService
 {
     const TMP_FOLDER_NAME = 'tmp';
+
+    const CACHED_IMAGE_LIFETIME = 43200; // 30 days in minutes
 
     /**
      * Upload one/multiple files
@@ -99,6 +101,26 @@ class TempFileService
             TempFileService::TMP_FOLDER_NAME . DIRECTORY_SEPARATOR . $filename,
             $filePath
         );
+    }
+
+    /**
+     * Resizes and cache image
+     *
+     * @param string $folder
+     * @param string $filename
+     * @param int $width
+     * @param int $height
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function getResizedImageToView(string $folder, string $filename, int $width, int $height)
+    {
+        $path = self::moveFolderPath($folder, $filename);
+
+        $img = Image::make(Image::cache(function ($image) use ($path, $filename, $width, $height) {
+            $image->make(Storage::disk('local')->path($path))->resize($width, $height);
+        }, self::CACHED_IMAGE_LIFETIME));
+
+        return response($img->encode($img->mime()))->header('Content-Type', $img->mime());
     }
 
     /**

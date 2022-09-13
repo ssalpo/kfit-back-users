@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\ApiV1;
 
+use App\Constants\TempFile;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TempFileImageRequest;
 use App\Http\Requests\TempFileUploadRequest;
 use App\Http\Resources\TempFileResource;
 use App\Services\TempFileService;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class FileController extends Controller
 {
@@ -45,5 +48,20 @@ class FileController extends Controller
         if (is_array($result)) return TempFileResource::collection($result);
 
         return new TempFileResource($result);
+    }
+
+    /**
+     * Resizes and cache image
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function image(TempFileImageRequest $request)
+    {
+        return $this->tempFileService->getResizedImageToView(
+            TempFile::FOLDER_AVATAR,
+            $request->filename,
+            $request->width,
+            $request->height
+        );
     }
 }
