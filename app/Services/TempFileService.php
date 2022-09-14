@@ -104,6 +104,20 @@ class TempFileService
     }
 
     /**
+     * Remove file from folder by filename
+     *
+     * @param string $folder
+     * @param string $filename
+     * @return void
+     */
+    public function removeFileFromFolder(string $folder, string $filename): bool
+    {
+        return Storage::disk('local')->delete(
+            self::moveFolderPath($folder, $filename)
+        );
+    }
+
+    /**
      * Resizes and cache image
      *
      * @param string $folder

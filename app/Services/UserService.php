@@ -3,8 +3,12 @@
 namespace App\Services;
 
 use App\Constants\TempFile;
+use App\Mail\UserPasswordReset;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserService
 {
@@ -44,12 +48,39 @@ class UserService
     {
         $user = User::findOrFail($id);
 
+        $oldAvatar = $user->avatar;
+
         $isAvatarChanged = $user->avatar !== Arr::get($data, 'avatar');
 
         $user->update($data);
 
-        if ($isAvatarChanged) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
+        if ($isAvatarChanged) {
+            $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
+
+            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_AVATAR, $oldAvatar);
+        }
 
         return $user->refresh();
+    }
+
+    /**
+     * Reset user password
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function resetPassword(int $id): bool
+    {
+        $user = User::findOrFail($id);
+
+        $newPassword = Str::random(8);
+
+        $isUpdated = $user->update(['password' => Hash::make($newPassword)]);
+
+        if ($isUpdated) Mail::to($user)->queue(
+            (new UserPasswordReset($user, $newPassword))->onQueue('emails')
+        );
+
+        return $isUpdated;
     }
 }

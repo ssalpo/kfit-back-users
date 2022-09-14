@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $this->userService = $userService;
 
-        $this->middleware('role:admin')->only(['store', 'update']);
+        $this->middleware('role:admin')->only(['store', 'update', 'resetPassword']);
     }
 
     /**
@@ -86,5 +86,16 @@ class UserController extends Controller
     public function show(User $user): UserResource
     {
         return new UserResource($user);
+    }
+
+    /**
+     * Reset user password
+     *
+     * @param int $user
+     * @return void
+     */
+    public function resetPassword(int $user)
+    {
+        $this->userService->resetPassword($user);
     }
 }
