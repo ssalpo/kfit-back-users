@@ -28,6 +28,17 @@ class UserController extends Controller
     /**
      * Returns a list of users
      *
+     * @OA\Get(
+     *     path="/users",
+     *     tags={"Users"},
+     *     summary="Returns a list of users",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *      )
+     * )
+     *
      * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
@@ -39,6 +50,17 @@ class UserController extends Controller
 
     /**
      * Returns the data of the currently logged in user
+     *
+     * @OA\Get(
+     *     path="/users/me",
+     *     tags={"Users"},
+     *     summary="Returns the data of the currently logged in user",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *      )
+     * )
      *
      * @param Request $request
      * @return UserResource
@@ -53,6 +75,23 @@ class UserController extends Controller
     /**
      * Adds a new user
      *
+     * @OA\Post(
+     *     path="/users",
+     *     tags={"Users"},
+     *     summary="Adds a new user",
+     *      @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/UserStoreRequest")
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *     )
+     * )
+     *
      * @param UserStoreRequest $request
      * @return UserResource
      */
@@ -65,6 +104,23 @@ class UserController extends Controller
 
     /**
      * Updates user data
+     *
+     * @OA\Put(
+     *     path="/users/{id}",
+     *     tags={"Users"},
+     *     summary="Updates a user data",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=202,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *     )
+     * )
      *
      * @param int $user
      * @param UserEditRequest $request
@@ -80,6 +136,24 @@ class UserController extends Controller
     /**
      * View user data by ID
      *
+     * @OA\Get(
+     *     path="/users/{user}",
+     *     tags={"Users"},
+     *     summary="Returns a file to view",
+     *     @OA\Parameter(
+     *         in="path",
+     *         description="File folder name",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *      )
+     * )
+     *
      * @param User $user
      * @return UserResource
      */
@@ -90,6 +164,23 @@ class UserController extends Controller
 
     /**
      * Reset user password
+     *
+     * @OA\Post(
+     *      path="/users/{user}/reset-password",
+     *      tags={"Users"},
+     *      summary="Reset user password",
+     *      @OA\Parameter(
+     *          in="path",
+     *          description="User id",
+     *          name="user",
+     *          required=true,
+     *          @OA\Schema(type="int")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       )
+     * )
      *
      * @param int $user
      * @return void
