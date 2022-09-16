@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create()->each(function (User $user) {
             $user->assignRole(Role::inRandomOrder()->first());
         });
+
+        \App\Models\Client::factory(10)->create();
     }
 }

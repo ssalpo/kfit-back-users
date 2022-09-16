@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1;
+namespace App\Http\Controllers\ApiV1\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
@@ -29,7 +29,7 @@ class UserController extends Controller
      * Returns a list of users
      *
      * @OA\Get(
-     *     path="/users",
+     *     path="/admin/users",
      *     tags={"Users"},
      *     summary="Returns a list of users",
      *     @OA\Response(
@@ -49,10 +49,10 @@ class UserController extends Controller
     }
 
     /**
-     * Returns the data of the currently logged in user
+     * Returns the data of the current login user
      *
      * @OA\Get(
-     *     path="/users/me",
+     *     path="/admin/users/me",
      *     tags={"Users"},
      *     summary="Returns the data of the currently logged in user",
      *     @OA\Response(
@@ -76,7 +76,7 @@ class UserController extends Controller
      * Adds a new user
      *
      * @OA\Post(
-     *     path="/users",
+     *     path="/admin/users",
      *     tags={"Users"},
      *     summary="Adds a new user",
      *      @OA\RequestBody(
@@ -106,7 +106,7 @@ class UserController extends Controller
      * Updates user data
      *
      * @OA\Put(
-     *     path="/users/{id}",
+     *     path="/admin/users/{id}",
      *     tags={"Users"},
      *     summary="Updates a user data",
      *     @OA\Parameter(
@@ -137,7 +137,7 @@ class UserController extends Controller
      * View user data by ID
      *
      * @OA\Get(
-     *     path="/users/{user}",
+     *     path="/admin/users/{user}",
      *     tags={"Users"},
      *     summary="Returns a file to view",
      *     @OA\Parameter(
@@ -166,7 +166,7 @@ class UserController extends Controller
      * Reset user password
      *
      * @OA\Post(
-     *      path="/users/{user}/reset-password",
+     *      path="/admin/users/{user}/reset-password",
      *      tags={"Users"},
      *      summary="Reset user password",
      *      @OA\Parameter(
