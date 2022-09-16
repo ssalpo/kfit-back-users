@@ -67,7 +67,7 @@ class ProductController extends Controller
      * Display the specified product.
      *
      * @OA\Get(
-     *     path="/admin/products/{user}",
+     *     path="/admin/products/{product}",
      *     tags={"Admin Products"},
      *     summary="Display the specified product",
      *     @OA\Parameter(
@@ -79,7 +79,7 @@ class ProductController extends Controller
      *     @OA\Response(
      *          response=200,
      *          description="OK",
-     *          @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
      *      )
      * )
      *
@@ -95,12 +95,12 @@ class ProductController extends Controller
      * Update the specified product in storage.
      *
      * @OA\Put(
-     *     path="/admin/products/{id}",
-     *     tags={"Users"},
+     *     path="/admin/products/{product}",
+     *     tags={"Admin Products"},
      *     summary="Update the specified product in storage.",
      *     @OA\Parameter(
      *         in="path",
-     *         name="id",
+     *         name="product",
      *         required=true,
      *         @OA\Schema(type="int"),
      *     ),

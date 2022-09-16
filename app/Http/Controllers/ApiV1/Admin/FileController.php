@@ -4,8 +4,8 @@ namespace App\Http\Controllers\ApiV1\Admin;
 
 use App\Constants\TempFile;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TempFileImageRequest;
-use App\Http\Requests\TempFileUploadRequest;
+use App\Http\Requests\Admin\TempFileImageRequest;
+use App\Http\Requests\Admin\TempFileUploadRequest;
 use App\Http\Resources\TempFileResource;
 use App\Services\TempFileService;
 

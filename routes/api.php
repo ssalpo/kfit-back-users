@@ -18,6 +18,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:api', 'namespace' => 'A
 
     // Product routes
     Route::apiResource('products', 'ProductController');
+
+    // Order routes
+    Route::apiResource('/orders/change-status', 'OrderController@changeStatus');
+    Route::apiResource('orders', 'OrderController');
 });
 
 // Client routes

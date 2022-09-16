@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\ApiV1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientStoreRequest;
+use App\Http\Requests\Admin\ClientStoreRequest;
 use App\Http\Resources\ClientResource;
 use App\Models\Client;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClientController extends Controller
