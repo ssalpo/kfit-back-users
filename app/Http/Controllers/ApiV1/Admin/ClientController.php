@@ -19,6 +19,17 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @OA\Get(
+     *     path="/admin/clients",
+     *     tags={"Clients"},
+     *     summary="Display a listing of the resource",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *      )
+     * )
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
@@ -30,6 +41,23 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @OA\Post(
+     *     path="/admin/clients",
+     *     tags={"Clients"},
+     *     summary="Store a newly created resource in storage",
+     *      @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/ClientStoreRequest")
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *     )
+     * )
      *
      * @param \Illuminate\Http\Request $request
      * @return ClientResource
@@ -44,6 +72,23 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
+     * @OA\Get(
+     *     path="/admin/clients/{id}",
+     *     tags={"Clients"},
+     *     summary="Display the specified resource",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *      )
+     * )
+     *
      * @param Client $client
      * @return ClientResource
      */
@@ -54,6 +99,23 @@ class ClientController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @OA\Put(
+     *     path="/admin/clients/{id}",
+     *     tags={"Clients"},
+     *     summary="Update the specified resource in storage",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=202,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *     )
+     * )
      *
      * @param ClientStoreRequest $request
      * @param Client $client
