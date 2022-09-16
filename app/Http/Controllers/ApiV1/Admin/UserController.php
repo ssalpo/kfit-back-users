@@ -142,7 +142,6 @@ class UserController extends Controller
      *     summary="Returns a file to view",
      *     @OA\Parameter(
      *         in="path",
-     *         description="File folder name",
      *         name="user",
      *         required=true,
      *         @OA\Schema(type="int"),

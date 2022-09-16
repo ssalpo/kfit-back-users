@@ -23,5 +23,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:api', 'namespace' => 'A
 // Client routes
 Route::group(['middleware' => ['auth:api-clients'], 'namespace' => 'Frontend'], function () {
     Route::get('/me', 'ClientController@me');
+
+    // Product routes
+    Route::get('/products', 'ProductController@index');
 });
 

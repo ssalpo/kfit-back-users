@@ -21,7 +21,7 @@ class ClientController extends Controller
      *
      * @OA\Get(
      *     path="/admin/clients",
-     *     tags={"Clients"},
+     *     tags={"Admin Clients"},
      *     summary="Display a listing of the resource",
      *     @OA\Response(
      *          response=200,
@@ -44,7 +44,7 @@ class ClientController extends Controller
      *
      * @OA\Post(
      *     path="/admin/clients",
-     *     tags={"Clients"},
+     *     tags={"Admin Clients"},
      *     summary="Store a newly created resource in storage",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -74,7 +74,7 @@ class ClientController extends Controller
      *
      * @OA\Get(
      *     path="/admin/clients/{id}",
-     *     tags={"Clients"},
+     *     tags={"Admin Clients"},
      *     summary="Display the specified resource",
      *     @OA\Parameter(
      *         in="path",
@@ -102,7 +102,7 @@ class ClientController extends Controller
      *
      * @OA\Put(
      *     path="/admin/clients/{id}",
-     *     tags={"Clients"},
+     *     tags={"Admin Clients"},
      *     summary="Update the specified resource in storage",
      *     @OA\Parameter(
      *         in="path",

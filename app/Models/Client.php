@@ -28,16 +28,6 @@ class Client extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Find the user instance for the given username.
-     *
-     * @param  string  $username
-     * @return null|Client
-     */
-    public function findForPassport($username): ?Client
-    {
-        return $this->where('phone', PhoneFormatter::onlyNumbers($username))->first();
-    }
 
     public function setPhoneAttribute($value)
     {

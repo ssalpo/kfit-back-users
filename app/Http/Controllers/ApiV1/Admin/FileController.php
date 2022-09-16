@@ -28,7 +28,7 @@ class FileController extends Controller
      *
      * @OA\Get(
      *     path="/admin/files/{folder}/{filename}",
-     *     tags={"Files"},
+     *     tags={"Admin Files"},
      *     summary="Returns a file to view",
      *     @OA\Parameter(
      *          in="path",
@@ -65,7 +65,7 @@ class FileController extends Controller
      *
      * @OA\Post(
      *      path="/admin/files/upload",
-     *      tags={"Files"},
+     *      tags={"Admin Files"},
      *      summary="Upload file",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -109,7 +109,7 @@ class FileController extends Controller
      *
      * @OA\Get (
      *     path="/admin/files/image/{filename}/{width}/{height}",
-     *     tags={"Files"},
+     *     tags={"Admin Files"},
      *     @OA\Parameter(
      *         in="path",
      *         name="filename",
