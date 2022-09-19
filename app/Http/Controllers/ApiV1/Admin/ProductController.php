@@ -2,85 +2,155 @@
 
 namespace App\Http\Controllers\ApiV1\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class ProductController extends BaseController
+class ProductController extends Controller
 {
     /**
      * Display a listing of the product.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/admin/products",
+     *     tags={"Admin Products"},
+     *     summary="Display a listing of the product.",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *      )
+     * )
+     *
+     * @return AnonymousResourceCollection
      */
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        $products = Product::all();
-        return $this->response($products);
+        return ProductResource::collection(
+            Product::paginate(10)
+        );
     }
 
     /**
      * Store a newly created product in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     *     path="/admin/products",
+     *     tags={"Admin Products"},
+     *     summary="Store a newly created product in storage",
+     *      @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/ProductRequest")
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *     )
+     * )
+     *
+     * @param ProductRequest $request
+     * @return ProductResource
      */
-    public function store(Request $request): JsonResponse
+    public function store(ProductRequest $request): ProductResource
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'description' => 'string'
-        ]);
-
-        $product = Product::create($validatedData);
-        return $this->response($product);
+        return new ProductResource(
+            Product::create($request->validated())
+        );
     }
 
     /**
      * Display the specified product.
      *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/admin/products/{product}",
+     *     tags={"Admin Products"},
+     *     summary="Display the specified product",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="product",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *      )
+     * )
+     *
+     * @return ProductResource
+     * @var Product $product
      */
-    public function show($id): JsonResponse
+    public function show(Product $product): ProductResource
     {
-        $product = Product::find($id);
-        if (is_null($product)) {
-            return $this->sendError('Product not found.');
-        }
-        return $this->response($product);
+        return new ProductResource($product);
     }
 
     /**
      * Update the specified product in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Put(
+     *     path="/admin/products/{product}",
+     *     tags={"Admin Products"},
+     *     summary="Update the specified product in storage.",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="product",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=202,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *     )
+     * )
+     *
+     * @param ProductRequest $request
+     * @param Product $product
+     * @return ProductResource
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(ProductRequest $request, Product $product): ProductResource
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'description' => 'string'
-        ]);
+        $product->update($request->validated());
 
-        $product = Product::findOrFail($id);
-        $product->update($validatedData);
-
-        return $this->response($product);
+        return new ProductResource(
+            $product->refresh()
+        );
     }
 
     /**
      * Remove the specified product from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Delete(
+     *     path="/admin/products",
+     *     tags={"Admin Products"},
+     *     summary="Remove the specified product from storage.",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *     )
+     * )
+     *
+     * @param Product $product
+     * @return ProductResource
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Product $product): ProductResource
     {
-        $product = Product::findOrFail($id);
         $product->delete();
-        return $this->response($product);
+
+        return new ProductResource($product);
     }
 }

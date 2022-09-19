@@ -4,8 +4,8 @@ namespace App\Http\Controllers\ApiV1\Admin;
 
 use App\Constants\TempFile;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TempFileImageRequest;
-use App\Http\Requests\TempFileUploadRequest;
+use App\Http\Requests\Admin\TempFileImageRequest;
+use App\Http\Requests\Admin\TempFileUploadRequest;
 use App\Http\Resources\TempFileResource;
 use App\Services\TempFileService;
 
@@ -28,7 +28,7 @@ class FileController extends Controller
      *
      * @OA\Get(
      *     path="/admin/files/{folder}/{filename}",
-     *     tags={"Files"},
+     *     tags={"Admin Files"},
      *     summary="Returns a file to view",
      *     @OA\Parameter(
      *          in="path",
@@ -65,7 +65,7 @@ class FileController extends Controller
      *
      * @OA\Post(
      *      path="/admin/files/upload",
-     *      tags={"Files"},
+     *      tags={"Admin Files"},
      *      summary="Upload file",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -109,7 +109,7 @@ class FileController extends Controller
      *
      * @OA\Get (
      *     path="/admin/files/image/{filename}/{width}/{height}",
-     *     tags={"Files"},
+     *     tags={"Admin Files"},
      *     @OA\Parameter(
      *         in="path",
      *         name="filename",

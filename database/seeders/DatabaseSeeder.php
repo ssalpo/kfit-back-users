@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -17,10 +18,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesTableSeeder::class);
 
-        \App\Models\User::factory(10)->create()->each(function (User $user) {
+        User::factory(10)->create()->each(function (User $user) {
             $user->assignRole(Role::inRandomOrder()->first());
         });
 
         \App\Models\Client::factory(10)->create();
+
+        Product::factory(10)->create();
     }
 }
