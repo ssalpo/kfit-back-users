@@ -14,7 +14,9 @@ class Product extends Model
         'title',
         'description',
         'price',
-        'expired_at'
+        'expired_at',
+        'platform',
+        'platform_id'
     ];
 
     public function order(): HasMany

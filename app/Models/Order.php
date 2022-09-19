@@ -17,6 +17,8 @@ class Order extends Model
         'status',
         'paid_at',
         'expired_at',
+        'platform',
+        'platform_id',
     ];
 
     protected $casts = [
