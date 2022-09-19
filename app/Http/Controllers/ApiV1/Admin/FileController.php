@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1;
+namespace App\Http\Controllers\ApiV1\Admin;
 
 use App\Constants\TempFile;
 use App\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class FileController extends Controller
      * Returns a file to view
      *
      * @OA\Get(
-     *     path="/files/{folder}/{filename}",
+     *     path="/admin/files/{folder}/{filename}",
      *     tags={"Files"},
      *     summary="Returns a file to view",
      *     @OA\Parameter(
@@ -64,7 +64,7 @@ class FileController extends Controller
      * Uploads a file to a temporary folder
      *
      * @OA\Post(
-     *      path="/files/upload",
+     *      path="/admin/files/upload",
      *      tags={"Files"},
      *      summary="Upload file",
      *      @OA\RequestBody(
@@ -108,7 +108,7 @@ class FileController extends Controller
      * Resizes and cache image
      *
      * @OA\Get (
-     *     path="/files/image/{filename}/{width}/{height}",
+     *     path="/admin/files/image/{filename}/{width}/{height}",
      *     tags={"Files"},
      *     @OA\Parameter(
      *         in="path",

@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers\ApiV1;
+namespace App\Http\Controllers\ApiV1\Admin;
 use App\Http\Controllers\Controller as Controller;
+
 class BaseController extends Controller
 {
     private function getApiHeaders(): array
