@@ -33,5 +33,10 @@ return [
     'autoweboffice' => [
         'apiKeyRead' => env('AUTOWEBOFFICE_KEY_READ'),
         'subdomain' => env('AUTOWEBOFFICE_SUBDOMAIN')
+    ],
+
+    'gurucan' => [
+        'key' => env('GURUCAN_KEY'),
+        'subdomain' => env('GURUCAN_SUBDOMAIN')
     ]
 ];

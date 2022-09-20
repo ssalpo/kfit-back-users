@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $service = new \App\Services\ExternalPlatform\GurucanService();
+
+    dd($service->orders());
 });

@@ -15,7 +15,7 @@ class AddColumnsToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->tinyInteger('platform')->nullable()->comment('Platform type from import records');
-            $table->unsignedInteger('platform_id')->nullable()->comment('Platform id from import records');
+            $table->string('platform_id', 50)->nullable()->comment('Platform id from import records');
         });
     }
 

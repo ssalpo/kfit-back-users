@@ -31,9 +31,10 @@ class AutowebofficeService implements ImportContract
                 'title' => $product->goods,
                 'description' => $product->brief_description,
                 'price' => $product->price,
+                'expired_at' => null,
                 'created_at' => Carbon::parse($product->creation_date),
                 'platform' => PlatformTypes::AUTOWEBOFFICE,
-                'platform_id' => (int)$product->id_goods
+                'platform_id' => $product->id_goods
             ];
         }, $this->handleEmptyValue($products));
     }
@@ -49,6 +50,7 @@ class AutowebofficeService implements ImportContract
                 'price' => $order->account_sum,
                 'status' => self::PLATFORM_STATUS_MAP[$order->id_account_status],
                 'paid_at' => Carbon::parse($order->date_of_payment),
+                'expired_at' => null,
                 'platform' => PlatformTypes::AUTOWEBOFFICE,
                 'platform_id' => $order->account_number
             ];
@@ -71,7 +73,7 @@ class AutowebofficeService implements ImportContract
                 'password' => $contact->password,
                 'created_at' => Carbon::parse($contact->date_registration),
                 'platform' => PlatformTypes::AUTOWEBOFFICE,
-                'platform_id' => (int)$contact->id_contact
+                'platform_id' => $contact->id_contact
             ];
         }, $this->handleEmptyValue($contacts));
     }
