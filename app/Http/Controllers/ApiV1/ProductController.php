@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1\Admin;
+namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the product.
      *
      * @OA\Get(
-     *     path="/admin/products",
-     *     tags={"Admin Products"},
+     *     path="/products",
+     *     tags={"Products"},
      *     summary="Display a listing of the product.",
      *     @OA\Response(
      *          response=200,
@@ -37,8 +42,8 @@ class ProductController extends Controller
      * Store a newly created product in storage.
      *
      * @OA\Post(
-     *     path="/admin/products",
-     *     tags={"Admin Products"},
+     *     path="/products",
+     *     tags={"Products"},
      *     summary="Store a newly created product in storage",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -67,8 +72,8 @@ class ProductController extends Controller
      * Display the specified product.
      *
      * @OA\Get(
-     *     path="/admin/products/{product}",
-     *     tags={"Admin Products"},
+     *     path="/products/{product}",
+     *     tags={"Products"},
      *     summary="Display the specified product",
      *     @OA\Parameter(
      *         in="path",
@@ -95,8 +100,8 @@ class ProductController extends Controller
      * Update the specified product in storage.
      *
      * @OA\Put(
-     *     path="/admin/products/{product}",
-     *     tags={"Admin Products"},
+     *     path="/products/{product}",
+     *     tags={"Products"},
      *     summary="Update the specified product in storage.",
      *     @OA\Parameter(
      *         in="path",
@@ -128,8 +133,8 @@ class ProductController extends Controller
      * Remove the specified product from storage.
      *
      * @OA\Delete(
-     *     path="/admin/products",
-     *     tags={"Admin Products"},
+     *     path="/products",
+     *     tags={"Products"},
      *     summary="Remove the specified product from storage.",
      *     @OA\Parameter(
      *         in="path",

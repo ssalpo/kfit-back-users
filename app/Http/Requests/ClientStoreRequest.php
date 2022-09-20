@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserEditRequest extends FormRequest
+class ClientStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class UserEditRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->user,
+            'phone' => 'required',
+            'email' => 'required|email|max:255|unique:users',
             'avatar' => 'nullable|max:255',
-            'password' => 'nullable|min:6'
         ];
     }
 }

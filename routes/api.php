@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Admin routes
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:api', 'namespace' => 'Admin'], function () {
+Route::group(['middleware' => 'auth:api'], function () {
     // User rotes
     Route::get('/users/me', 'UserController@me');
     Route::post('/users/{user}/reset-password', 'UserController@resetPassword');
@@ -23,12 +22,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:api', 'namespace' => 'A
     Route::apiResource('/orders/change-status', 'OrderController@changeStatus');
     Route::apiResource('orders', 'OrderController');
 });
-
-// Client routes
-Route::group(['middleware' => ['auth:api-clients'], 'namespace' => 'Frontend'], function () {
-    Route::get('/me', 'ClientController@me');
-
-    // Product routes
-    Route::get('/products', 'ProductController@index');
-});
-

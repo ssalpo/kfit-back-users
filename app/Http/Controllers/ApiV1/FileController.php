@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1\Admin;
+namespace App\Http\Controllers\ApiV1;
 
 use App\Constants\TempFile;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\TempFileImageRequest;
-use App\Http\Requests\Admin\TempFileUploadRequest;
+use App\Http\Requests\TempFileImageRequest;
+use App\Http\Requests\TempFileUploadRequest;
 use App\Http\Resources\TempFileResource;
 use App\Services\TempFileService;
 
@@ -19,16 +19,14 @@ class FileController extends Controller
     public function __construct(TempFileService $tempFileService)
     {
         $this->tempFileService = $tempFileService;
-
-        $this->middleware('role:admin')->only(['upload']);
     }
 
     /**
      * Returns a file to view
      *
      * @OA\Get(
-     *     path="/admin/files/{folder}/{filename}",
-     *     tags={"Admin Files"},
+     *     path="/files/{folder}/{filename}",
+     *     tags={"Files"},
      *     summary="Returns a file to view",
      *     @OA\Parameter(
      *          in="path",
@@ -64,8 +62,8 @@ class FileController extends Controller
      * Uploads a file to a temporary folder
      *
      * @OA\Post(
-     *      path="/admin/files/upload",
-     *      tags={"Admin Files"},
+     *      path="/files/upload",
+     *      tags={"Files"},
      *      summary="Upload file",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -108,8 +106,8 @@ class FileController extends Controller
      * Resizes and cache image
      *
      * @OA\Get (
-     *     path="/admin/files/image/{filename}/{width}/{height}",
-     *     tags={"Admin Files"},
+     *     path="/files/image/{filename}/{width}/{height}",
+     *     tags={"Files"},
      *     @OA\Parameter(
      *         in="path",
      *         name="filename",
