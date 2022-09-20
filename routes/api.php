@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => ['auth:api,api-clients']], function () {
     // User rotes
     Route::get('/users/me', 'UserController@me');
     Route::post('/users/{user}/reset-password', 'UserController@resetPassword');
