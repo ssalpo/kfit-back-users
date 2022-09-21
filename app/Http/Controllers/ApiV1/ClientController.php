@@ -6,13 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Resources\ClientResource;
 use App\Models\Client;
+use App\Services\ClientService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClientController extends Controller
 {
-    public function __construct()
+    /**
+     * @var ClientService
+     */
+    private $clientService;
+
+    /**
+     * @param ClientService $clientService
+     */
+    public function __construct(ClientService $clientService)
     {
         $this->middleware('role:admin');
+
+        $this->clientService = $clientService;
     }
 
     /**
@@ -34,7 +45,7 @@ class ClientController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return ClientResource::collection(
-            Client::paginate()
+            Client::with('orders')->paginate()
         );
     }
 
@@ -93,6 +104,8 @@ class ClientController extends Controller
      */
     public function show(Client $client): ClientResource
     {
+        $client->load('orders');
+
         return new ClientResource($client);
     }
 
@@ -117,15 +130,13 @@ class ClientController extends Controller
      * )
      *
      * @param ClientStoreRequest $request
-     * @param Client $client
+     * @param int $client
      * @return ClientResource
      */
-    public function update(ClientStoreRequest $request, Client $client): ClientResource
+    public function update(ClientStoreRequest $request, int $client): ClientResource
     {
-        $client->update($request->validated());
-
         return new ClientResource(
-            $client->refresh()
+            $this->clientService->update($client, $request->validated())
         );
     }
 }

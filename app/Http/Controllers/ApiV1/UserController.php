@@ -97,8 +97,12 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request): UserResource
     {
+        $user = $this->userService->create($request->validated());
+
+        $user->assignRole($request->role);
+
         return new UserResource(
-            $this->userService->create($request->validated())
+            $user
         );
     }
 

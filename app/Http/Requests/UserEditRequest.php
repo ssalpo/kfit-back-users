@@ -27,6 +27,8 @@ class UserEditRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $this->user,
             'avatar' => 'nullable|max:255',
+            'active' => 'required|boolean',
+            'role' => 'required|numeric|exists:roles,id',
             'password' => 'nullable|min:6'
         ];
     }

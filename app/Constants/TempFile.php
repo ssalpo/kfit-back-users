@@ -12,8 +12,10 @@ interface TempFile
     ];
 
     const FOLDER_AVATAR = 'avatar';
+    const FOLDER_CLIENTS_AVATAR = 'clients';
 
     const FOLDERS = [
-        self::FOLDER_AVATAR
+        self::FOLDER_AVATAR,
+        self::FOLDER_CLIENTS_AVATAR,
     ];
 }
