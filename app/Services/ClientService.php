@@ -38,9 +38,9 @@ class ClientService
         $client->assignRole(Arr::get($data, 'role'));
 
         if ($isAvatarChanged) {
-            $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_CLIENTS_AVATAR, $client->avatar);
+            $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_CLIENT_AVATAR, $client->avatar);
 
-            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_CLIENTS_AVATAR, $oldAvatar);
+            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_CLIENT_AVATAR, $oldAvatar);
         }
 
         return $client->refresh();
