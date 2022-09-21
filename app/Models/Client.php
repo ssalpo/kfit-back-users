@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\Formatters\PhoneFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -28,10 +29,14 @@ class Client extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+        'active' => 'boolean'
+    ];
+
     /**
      * Find the user instance for the given username.
      *
-     * @param  string  $username
+     * @param string $username
      * @return \App\Models\User
      */
     public function findForPassport($username)
@@ -47,5 +52,10 @@ class Client extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($this->phone);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -47,4 +47,13 @@ class ClientStoreRequest
      * @var string
      */
     private $avatar;
+
+    /**
+     * @OA\Property(
+     *     title="active"
+     * )
+     *
+     * @var boolean
+     */
+    private $active;
 }

@@ -38,4 +38,22 @@ class UserResource
      * @var string
      */
     private $avatar;
+
+    /**
+     * @OA\Property(
+     *     title="active"
+     * )
+     *
+     * @var bool
+     */
+    private $active;
+
+    /**
+     * @OA\Property(
+     *     title="roles"
+     * )
+     *
+     * @var array
+     */
+    private $roles;
 }

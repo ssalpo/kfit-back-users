@@ -41,6 +41,24 @@ class UserStoreRequest
 
     /**
      * @OA\Property(
+     *     title="active"
+     * )
+     *
+     * @var boolean
+     */
+    private $active;
+
+    /**
+     * @OA\Property(
+     *     title="role"
+     * )
+     *
+     * @var string
+     */
+    private $role;
+
+    /**
+     * @OA\Property(
      *     title="password"
      * )
      *
