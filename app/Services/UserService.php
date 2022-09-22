@@ -34,6 +34,8 @@ class UserService
 
         if ($user->avatar) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
 
+        $user->assignRole($data['role']);
+
         return $user;
     }
 
