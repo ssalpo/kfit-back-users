@@ -119,6 +119,12 @@ class UserController extends Controller
      *         required=true,
      *         @OA\Schema(type="int"),
      *     ),
+     *      @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/UserEditRequest")
+     *         )
+     *      ),
      *     @OA\Response(
      *         response=202,
      *         description="OK",
