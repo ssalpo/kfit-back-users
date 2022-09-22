@@ -54,7 +54,7 @@ class UserService
 
         $user->update($data);
 
-        $user->assignRole(Arr::get($data, 'role'));
+        $user->syncRoles(Arr::get($data, 'role'));
 
         if ($isAvatarChanged) {
             $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
