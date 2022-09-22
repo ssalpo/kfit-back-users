@@ -50,10 +50,10 @@ class UserResource
 
     /**
      * @OA\Property(
-     *     title="roles"
+     *     title="role"
      * )
      *
-     * @var array
+     * @var int
      */
-    private $roles;
+    private $role;
 }
