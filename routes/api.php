@@ -10,8 +10,8 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
 
     // File routes
     Route::post('/files/upload', 'FileController@upload');
-    Route::get('/files/{folder}/{filename}', 'FileController@file');
-    Route::get('/files/image/{filename}/{width}/{height}', 'FileController@image');
+    Route::get('/files/{model}/{folder}/{filename}', 'FileController@file');
+    Route::get('/files/image/{model}/{folder}/{filename}/{width}/{height}', 'FileController@image');
 
     Route::apiResource('/clients/', 'ClientController')->except(['destroy']);
 
