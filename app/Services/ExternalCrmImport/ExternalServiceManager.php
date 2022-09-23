@@ -5,14 +5,15 @@ namespace App\Services\ExternalCrmImport;
 class ExternalServiceManager
 {
     const SERVICE_LIST = [
-        'autoweboffice',
+//        'autoweboffice',
         'gurucan'
     ];
 
     public static function make(string $service)
     {
-        $service = sprintf('%Service', ucfirst($service));
+        $service = ucfirst($service);
+        $service = "App\Services\ExternalCrmImport\Importers\\{$service}Service";
 
-        return new ${$service}();
+        return new $service();
     }
 }

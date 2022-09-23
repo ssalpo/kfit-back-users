@@ -20,7 +20,7 @@ class GurucanService implements ImportContract
 
     public function products(int $page): array
     {
-        $records = $this->apiClient()->get('users')->json('data', []);
+        $records = $this->apiClient()->get('users', ['page' => $page])->json('data', []);
 
         $product = collect($records)->filter(function ($record) {
                 return isset($record['purchasedItems']) && count($record['purchasedItems']);
@@ -42,7 +42,7 @@ class GurucanService implements ImportContract
     public function orders(int $page): array
     {
         $records = array_filter(
-            $this->apiClient()->get('users')->json('data', []),
+            $this->apiClient()->get('users', ['page' => $page])->json('data', []),
             function ($record) {
                 return isset($record['purchasedItems']) &&
                     count($record['purchasedItems']) &&
@@ -68,14 +68,13 @@ class GurucanService implements ImportContract
 
     public function clients(int $page): array
     {
-        $records = $this->apiClient()->get('users')->json('data', []);
+        $records = $this->apiClient()->get('users', ['page' => $page])->json('data', []);
 
         return array_map(function ($record) {
             return [
                 'name' => $record['name'],
                 'email' => $record['email'],
                 'phone' => $record['phone'] ?? null,
-                'password' => $record['phone'] ?? null,
                 'created_at' => Carbon::parse($record['createdAt']),
                 'platform' => PlatformTypes::GURUCAN,
                 'platform_id' => $record['_id']

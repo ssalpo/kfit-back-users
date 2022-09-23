@@ -28,7 +28,7 @@ class ImportProductsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(int $page, int $currentService)
+    public function __construct(int $page, string $currentService)
     {
         $this->page = $page;
         $this->currentService = $currentService;

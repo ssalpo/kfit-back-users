@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsToClientsTable extends Migration
+class ChangeColumnsInClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,6 @@ class AddColumnsToClientsTable extends Migration
     {
         Schema::table('clients', function (Blueprint $table) {
             $table->string('phone', 20)->nullable()->change();
-            $table->tinyInteger('platform')->nullable()->comment('Platform type from import records');
-            $table->string('platform_id', 50)->nullable()->comment('Platform id from import records');
         });
     }
 
@@ -29,7 +27,6 @@ class AddColumnsToClientsTable extends Migration
     {
         Schema::table('clients', function (Blueprint $table) {
             $table->string('phone', 20)->change();
-            $table->dropColumn(['platform', 'platform_id']);
         });
     }
 }

@@ -43,20 +43,26 @@ class ImportFromExternal extends Command
     {
         $servicePaginationCounts = [
             'autoweboffice' => ['products' => 5, 'clients' => 110, 'orders' => 270],
-            'gurucan' => ['products' => 0, 'clients' => 0, 'orders' => 0]
+            'gurucan' => ['products' => 2, 'clients' => 1080, 'orders' => 1080]
         ];
 
         foreach (ExternalServiceManager::SERVICE_LIST as $service) {
             for ($i = 1; $i <= $servicePaginationCounts[$service]['products']; $i++) {
-                ImportProductsJob::dispatch($i)->onQueue('crmimport');
+                ImportProductsJob::dispatch($i, $service)
+                    ->onQueue('crmimport')
+                    ->delay(now()->addSeconds(5));
             }
 
             for ($i = 1; $i <= $servicePaginationCounts[$service]['clients']; $i++) {
-                ImportClientsJob::dispatch($i)->onQueue('crmimport');
+                ImportClientsJob::dispatch($i, $service)
+                    ->onQueue('crmimport')
+                    ->delay(now()->addSeconds(5));
             }
 
             for ($i = 1; $i <= $servicePaginationCounts[$service]['orders']; $i++) {
-                ImportOrdersJob::dispatch($i)->onQueue('crmimport');
+                ImportOrdersJob::dispatch($i, $service)
+                    ->onQueue('crmimport')
+                    ->delay(now()->addSeconds(5));
             }
         }
 

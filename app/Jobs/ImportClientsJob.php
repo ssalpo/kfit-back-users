@@ -46,7 +46,7 @@ class ImportClientsJob implements ShouldQueue
 
         foreach ($service->clients($this->page) as $client) {
             DB::table('clients')->updateOrInsert(
-                \Illuminate\Support\Arr::only($client, ['platform', 'platform_id']),
+                \Illuminate\Support\Arr::only($client, ['email', 'platform', 'platform_id']),
                 $client
             );
         }

@@ -84,7 +84,6 @@ class AutowebofficeService implements ImportContract
             return [
                 'name' => $contact->name,
                 'email' => $contact->email,
-                'password' => Hash::make($contact->password),
                 'created_at' => Carbon::parse($contact->date_registration),
                 'platform' => PlatformTypes::AUTOWEBOFFICE,
                 'platform_id' => $contact->id_contact
