@@ -6,7 +6,7 @@ class ExternalServiceManager
 {
     const SERVICE_LIST = [
         'autoweboffice',
-//        'gurucan'
+        'gurucan'
     ];
 
     public static function make(string $service)
