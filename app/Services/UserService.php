@@ -34,6 +34,8 @@ class UserService
 
         if ($user->avatar) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
 
+        $user->assignRole($data['role']);
+
         return $user;
     }
 
@@ -59,7 +61,7 @@ class UserService
         if ($isAvatarChanged) {
             $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
 
-            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_USER_AVATAR, $oldAvatar);
+            if($oldAvatar) $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_USER_AVATAR, $oldAvatar);
         }
 
         return $user->refresh();
