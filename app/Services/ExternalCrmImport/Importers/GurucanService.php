@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services\ExternalPlatform;
+namespace App\Services\ExternalCrmImport\Importers;
 
 use App\Constants\Order;
 use App\Constants\PlatformTypes;
+use App\Services\ExternalCrmImport\Contracts\ImportContract;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -17,7 +18,7 @@ class GurucanService implements ImportContract
             ->baseUrl(sprintf("https://%s.gurucan.com/api/admin/", config('services.gurucan.subdomain')));
     }
 
-    public function products(): array
+    public function products(int $page): array
     {
         $records = $this->apiClient()->get('users')->json('data', []);
 
@@ -38,7 +39,7 @@ class GurucanService implements ImportContract
         ];
     }
 
-    public function orders(): array
+    public function orders(int $page): array
     {
         $records = array_filter(
             $this->apiClient()->get('users')->json('data', []),
@@ -65,7 +66,7 @@ class GurucanService implements ImportContract
         }, $records);
     }
 
-    public function clients(): array
+    public function clients(int $page): array
     {
         $records = $this->apiClient()->get('users')->json('data', []);
 

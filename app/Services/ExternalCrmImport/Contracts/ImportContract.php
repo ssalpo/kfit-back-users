@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ExternalPlatform;
+namespace App\Services\ExternalCrmImport\Contracts;
 
 interface ImportContract
 {
@@ -9,21 +9,24 @@ interface ImportContract
     /**
      * List of products prepared from external service
      *
+     * @param int $page
      * @return array
      */
-    public function products(): array;
+    public function products(int $page): array;
 
     /**
      * List of orders prepared from external service
      *
+     * @param int $page
      * @return array
      */
-    public function orders(): array;
+    public function orders(int $page): array;
 
     /**
      * List of clients prepared from external service
      *
+     * @param int $page
      * @return array
      */
-    public function clients(): array;
+    public function clients(int $page): array;
 }
