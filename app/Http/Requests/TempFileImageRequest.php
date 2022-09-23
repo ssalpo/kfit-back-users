@@ -24,6 +24,8 @@ class TempFileImageRequest extends FormRequest
     public function rules()
     {
         return [
+            'model' => 'required',
+            'folder' => 'required',
             'filename' => 'required',
             'width' => 'required|numeric|max:1000',
             'height' => 'required|numeric|max:1000',
@@ -33,6 +35,8 @@ class TempFileImageRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
+            'model' => $this->route('model'),
+            'folder' => $this->route('folder'),
             'filename' => $this->route('filename'),
             'width' => $this->route('width'),
             'height' => $this->route('height'),

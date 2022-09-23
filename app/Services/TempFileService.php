@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use League\Flysystem\FileNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TempFileService
 {
@@ -65,13 +66,16 @@ class TempFileService
     /**
      * Returns a file to view
      *
+     * @param string $model
      * @param string $folder
      * @param string $filename
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
-     * @throws \Exception
+     * @throws FileNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function getFileToView(string $folder, string $filename)
+    public function getFileToView(string $model, string $folder, string $filename)
     {
+        $folder = $model . DIRECTORY_SEPARATOR . $folder;
         $path = self::moveFolderPath($folder, $filename);
         $storage = Storage::disk('local');
 
@@ -80,7 +84,7 @@ class TempFileService
         }
 
         if (!$storage->exists($path)) {
-            throw new FileNotFoundException('Файл не найден!');
+            throw new NotFoundHttpException('Файл не найден!');
         }
 
         return response($storage->get($path))->header('Content-Type', $storage->mimeType($path));

@@ -25,16 +25,24 @@ class FileController extends Controller
      * Returns a file to view
      *
      * @OA\Get(
-     *     path="/files/{folder}/{filename}",
+     *     path="/files/{model}/{folder}/{filename}",
      *     tags={"Files"},
      *     summary="Returns a file to view",
+     *     @OA\Parameter(
+     *          in="path",
+     *         description="Model name",
+     *         name="model",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *         @OA\Examples(example="string", value="model", summary="Model name"),
+     *     ),
      *     @OA\Parameter(
      *          in="path",
      *         description="File folder name",
      *         name="folder",
      *         required=true,
      *         @OA\Schema(type="string"),
-     *         @OA\Examples(example="string", value="avatar", summary="Folder name"),
+     *         @OA\Examples(example="string", value="folder", summary="Folder name"),
      *     ),
      *     @OA\Parameter(
      *         in="path",
@@ -53,9 +61,9 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      * @throws \Exception
      */
-    public function file(string $folder, string $filename)
+    public function file(string $model, string $folder, string $filename)
     {
-        return $this->tempFileService->getFileToView($folder, $filename);
+        return $this->tempFileService->getFileToView($model, $folder, $filename);
     }
 
     /**
@@ -106,8 +114,20 @@ class FileController extends Controller
      * Resizes and cache image
      *
      * @OA\Get (
-     *     path="/files/image/{filename}/{width}/{height}",
+     *     path="/files/image/{model}/{folder}/{filename}/{width}/{height}",
      *     tags={"Files"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="model",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="folder",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         in="path",
      *         name="filename",
@@ -136,8 +156,10 @@ class FileController extends Controller
      */
     public function image(TempFileImageRequest $request)
     {
+        $folder = $request->model . DIRECTORY_SEPARATOR . $request->folder;
+
         return $this->tempFileService->getResizedImageToView(
-            TempFile::FOLDER_AVATAR,
+            $folder,
             $request->filename,
             $request->width,
             $request->height
