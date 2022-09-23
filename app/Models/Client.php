@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\Formatters\PhoneFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,10 @@ class Client extends Authenticatable
         'remember_token',
     ];
 
+    public function platformClients(): HasMany
+    {
+        return $this->hasMany(PlatformClient::class);
+    }
 
     public function setPhoneAttribute($value)
     {

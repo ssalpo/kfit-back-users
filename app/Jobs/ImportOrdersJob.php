@@ -53,18 +53,18 @@ class ImportOrdersJob implements ShouldQueue
         $platformProductIds = array_unique(array_column($orders, 'product_id'));
         $platformClientIds = array_unique(array_column($orders, 'client_id'));
 
-        $products = Product::whereIn('platform_id', $platformProductIds)->wherePlatform(PlatformTypes::AUTOWEBOFFICE)->pluck('id', 'platform_id');
-        $clients = Client::whereIn('platform_id', $platformClientIds)->wherePlatform(PlatformTypes::AUTOWEBOFFICE)->pluck('id', 'platform_id');
+        $products = Product::whereIn('platform_id', $platformProductIds)->pluck('id', 'platform_id');
+        $clients = Client::whereHas('platformClients', function ($q) use ($platformClientIds) {
+            $q->whereIn('platform_id', $platformClientIds);
+        })->pluck('id', 'platform_id');
 
         foreach ($orders as $order) {
-            $data = [
-                'client_id' => $clients[$order['client_id']],
-                'product_id' => $products[$order['product_id']]
-            ];
-
             DB::table('orders')->updateOrInsert(
                 Arr::only($order, ['platform', 'platform_id']),
-                array_merge($order, $data)
+                array_merge($order, [
+                    'client_id' => $clients[$order['client_id']],
+                    'product_id' => $products[$order['product_id']]
+                ])
             );
         }
     }

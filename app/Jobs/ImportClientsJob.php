@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class ImportClientsJob implements ShouldQueue
@@ -44,10 +45,15 @@ class ImportClientsJob implements ShouldQueue
     {
         $service = ExternalServiceManager::make($this->currentService);
 
-        foreach ($service->clients($this->page) as $client) {
-            DB::table('clients')->updateOrInsert(
-                \Illuminate\Support\Arr::only($client, ['email', 'platform', 'platform_id']),
-                $client
+        foreach ($service->clients($this->page) as $clientData) {
+            $client = DB::table('clients')->where('email', $clientData['email'])->first();
+
+            if(!$client) $clientId = DB::table('clients')->insertGetId(Arr::only($clientData, ['name', 'email', 'created_at']));
+            else $clientId = $client->id;
+
+            DB::table('platform_clients')->updateOrInsert(
+                Arr::only($clientData, ['email', 'platform', 'platform_id']),
+                array_merge($clientData, ['client_id' => $clientId])
             );
         }
     }
