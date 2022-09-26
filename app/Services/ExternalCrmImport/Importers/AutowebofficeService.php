@@ -91,7 +91,7 @@ class AutowebofficeService implements ImportContract
         }, $this->handleEmptyValue($contacts));
     }
 
-    public function handleEmptyValue($records): array
+    private function handleEmptyValue($records): array
     {
         return is_array($records) ? $records : [];
     }

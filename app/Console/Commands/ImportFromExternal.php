@@ -15,7 +15,7 @@ class ImportFromExternal extends Command
      *
      * @var string
      */
-    protected $signature = 'kfit:import:crm';
+    protected $signature = 'kfit:import:crm {--except=}';
 
     /**
      * The console command description.
@@ -41,28 +41,33 @@ class ImportFromExternal extends Command
      */
     public function handle()
     {
-        $servicePaginationCounts = [
-            'autoweboffice' => ['products' => 5, 'clients' => 110, 'orders' => 270],
-            'gurucan' => ['products' => 2, 'clients' => 1080, 'orders' => 1080]
-        ];
+        $exceptHandlers = array_filter(explode(',', $this->option('except')));
 
         foreach (ExternalServiceManager::SERVICE_LIST as $service) {
-            for ($i = 1; $i <= $servicePaginationCounts[$service]['products']; $i++) {
-                ImportProductsJob::dispatch($i, $service)
-                    ->onQueue('crmimport')
-                    ->delay(now()->addSeconds(5));
+            $paginationService = ExternalServiceManager::makePagination($service);
+
+            if (!in_array('products', $exceptHandlers)) {
+                for ($i = 1; $i <= $paginationService->products(); $i++) {
+                    ImportProductsJob::dispatch($i, $service)
+                        ->onQueue('crmimport')
+                        ->delay(now()->addSeconds(5));
+                }
             }
 
-            for ($i = 1; $i <= $servicePaginationCounts[$service]['clients']; $i++) {
-                ImportClientsJob::dispatch($i, $service)
-                    ->onQueue('crmimport')
-                    ->delay(now()->addSeconds(5));
+            if (!in_array('clients', $exceptHandlers)) {
+                for ($i = 1; $i <= $paginationService->clients(); $i++) {
+                    ImportClientsJob::dispatch($i, $service)
+                        ->onQueue('crmimport')
+                        ->delay(now()->addSeconds(5));
+                }
             }
 
-            for ($i = 1; $i <= $servicePaginationCounts[$service]['orders']; $i++) {
-                ImportOrdersJob::dispatch($i, $service)
-                    ->onQueue('crmimport')
-                    ->delay(now()->addSeconds(5));
+            if (!in_array('orders', $exceptHandlers)) {
+                for ($i = 1; $i <= $paginationService->orders(); $i++) {
+                    ImportOrdersJob::dispatch($i, $service)
+                        ->onQueue('crmimport')
+                        ->delay(now()->addSeconds(5));
+                }
             }
         }
 
