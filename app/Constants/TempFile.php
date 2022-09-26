@@ -11,9 +11,11 @@ interface TempFile
         'doc,pdf,docx,zip'
     ];
 
-    const FOLDER_AVATAR = 'avatar';
+    const FOLDER_USER_AVATAR = 'user/avatar';
+    const FOLDER_CLIENT_AVATAR = 'client/avatar';
 
     const FOLDERS = [
-        self::FOLDER_AVATAR
+        self::FOLDER_USER_AVATAR,
+        self::FOLDER_CLIENT_AVATAR,
     ];
 }

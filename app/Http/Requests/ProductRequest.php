@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Order;
+namespace App\Http\Requests;
 
-use App\Constants\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderChangeStatusRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +24,10 @@ class OrderChangeStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', 'numeric', 'in:' . implode(',', Order::ALL_STATUSES)]
+            'title' => 'required|min:3|max:255',
+            'description' => 'required',
+            'price' => 'nullable|numeric',
+            'expired_at' => 'nullable|date_format:Y-m-d'
         ];
     }
 }

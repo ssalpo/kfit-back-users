@@ -1,24 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1\Admin;
+namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Order\OrderChangeStatusRequest;
-use App\Http\Requests\Admin\Order\OrderRequest;
+use App\Http\Requests\OrderChangeStatusRequest;
+use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use App\Constants\Order as OrderConstants;
 use App\Services\OrderService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @OA\Get(
-     *     path="/admin/orders",
-     *     tags={"Admin Orders"},
+     *     path="/orders",
+     *     tags={"Orders"},
      *     summary="Display a listing of the orders",
      *     @OA\Response(
      *          response=200,
@@ -40,8 +45,8 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @OA\Post(
-     *     path="/admin/orders",
-     *     tags={"Admin Orders"},
+     *     path="/orders",
+     *     tags={"Orders"},
      *     summary="Store a newly created resource in storage",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -70,8 +75,8 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @OA\Get(
-     *     path="/admin/orders/{order}",
-     *     tags={"Admin Orders"},
+     *     path="/orders/{order}",
+     *     tags={"Orders"},
      *     summary="Display the specified resource",
      *     @OA\Parameter(
      *         in="path",
@@ -98,8 +103,8 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @OA\Put(
-     *     path="/admin/orders/{order}",
-     *     tags={"Admin Orders"},
+     *     path="/orders/{order}",
+     *     tags={"Orders"},
      *     summary="Update the specified resource in storage",
      *     @OA\Parameter(
      *         in="path",
@@ -131,8 +136,8 @@ class OrderController extends Controller
      * Remove the specified resource from storage.
      *
      * @OA\Delete(
-     *     path="/admin/orders",
-     *     tags={"Admin Orders"},
+     *     path="/orders",
+     *     tags={"Orders"},
      *     summary="Remove the specified resource from storage.",
      *     @OA\Parameter(
      *         in="path",
@@ -161,8 +166,8 @@ class OrderController extends Controller
      * Changes the order status
      *
      * @OA\Post(
-     *     path="/admin/orders/{order}/change-status",
-     *     tags={"Admin Orders"},
+     *     path="/orders/{order}/change-status",
+     *     tags={"Orders"},
      *     summary="Changes the order status",
      *      @OA\RequestBody(
      *         @OA\MediaType(

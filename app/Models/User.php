@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasRoles, HasFactory, Notifiable;
 
+    protected $with = ['roles'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'avatar',
+        'active',
         'password',
     ];
 
@@ -43,6 +46,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'active' => 'boolean'
     ];
 
     public function setPasswordAttribute($value)

@@ -1,26 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1\Admin;
+namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ClientStoreRequest;
+use App\Http\Requests\ClientStoreRequest;
 use App\Http\Resources\ClientResource;
 use App\Models\Client;
+use App\Services\ClientService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClientController extends Controller
 {
-    public function __construct()
+    /**
+     * @var ClientService
+     */
+    private $clientService;
+
+    /**
+     * @param ClientService $clientService
+     */
+    public function __construct(ClientService $clientService)
     {
-        $this->middleware('role:admin')->except('show');
+        $this->middleware('role:admin');
+
+        $this->clientService = $clientService;
     }
 
     /**
      * Display a listing of the resource.
      *
      * @OA\Get(
-     *     path="/admin/clients",
-     *     tags={"Admin Clients"},
+     *     path="/clients",
+     *     tags={"Clients"},
      *     summary="Display a listing of the resource",
      *     @OA\Response(
      *          response=200,
@@ -34,7 +45,7 @@ class ClientController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return ClientResource::collection(
-            Client::paginate()
+            Client::with('orders')->paginate()
         );
     }
 
@@ -42,8 +53,8 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      *
      * @OA\Post(
-     *     path="/admin/clients",
-     *     tags={"Admin Clients"},
+     *     path="/clients",
+     *     tags={"Clients"},
      *     summary="Store a newly created resource in storage",
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -72,8 +83,8 @@ class ClientController extends Controller
      * Display the specified resource.
      *
      * @OA\Get(
-     *     path="/admin/clients/{id}",
-     *     tags={"Admin Clients"},
+     *     path="/clients/{id}",
+     *     tags={"Clients"},
      *     summary="Display the specified resource",
      *     @OA\Parameter(
      *         in="path",
@@ -93,6 +104,8 @@ class ClientController extends Controller
      */
     public function show(Client $client): ClientResource
     {
+        $client->load('orders');
+
         return new ClientResource($client);
     }
 
@@ -100,8 +113,8 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @OA\Put(
-     *     path="/admin/clients/{id}",
-     *     tags={"Admin Clients"},
+     *     path="/clients/{id}",
+     *     tags={"Clients"},
      *     summary="Update the specified resource in storage",
      *     @OA\Parameter(
      *         in="path",
@@ -117,15 +130,13 @@ class ClientController extends Controller
      * )
      *
      * @param ClientStoreRequest $request
-     * @param Client $client
+     * @param int $client
      * @return ClientResource
      */
-    public function update(ClientStoreRequest $request, Client $client): ClientResource
+    public function update(ClientStoreRequest $request, int $client): ClientResource
     {
-        $client->update($request->validated());
-
         return new ClientResource(
-            $client->refresh()
+            $this->clientService->update($client, $request->validated())
         );
     }
 }

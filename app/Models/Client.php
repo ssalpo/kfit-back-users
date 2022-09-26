@@ -29,9 +29,19 @@ class Client extends Authenticatable
         'remember_token',
     ];
 
-    public function platformClients(): HasMany
+    protected $casts = [
+        'active' => 'boolean'
+    ];
+
+    /**
+     * Find the user instance for the given username.
+     *
+     * @param string $username
+     * @return \App\Models\User
+     */
+    public function findForPassport($username)
     {
-        return $this->hasMany(PlatformClient::class);
+        return $this->where('phone', $username)->first();
     }
 
     public function setPhoneAttribute($value)
@@ -42,5 +52,15 @@ class Client extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($this->phone);
+    }
+
+    public function platformClients(): HasMany
+    {
+        return $this->hasMany(PlatformClient::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

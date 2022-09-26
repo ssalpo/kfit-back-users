@@ -32,7 +32,7 @@ class UserService
     {
         $user = User::create($data);
 
-        if ($user->avatar) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
+        if ($user->avatar) $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
 
         return $user;
     }
@@ -54,10 +54,12 @@ class UserService
 
         $user->update($data);
 
-        if ($isAvatarChanged) {
-            $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_AVATAR, $user->avatar);
+        $user->assignRole(Arr::get($data, 'role'));
 
-            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_AVATAR, $oldAvatar);
+        if ($isAvatarChanged) {
+            $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_USER_AVATAR, $user->avatar);
+
+            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_USER_AVATAR, $oldAvatar);
         }
 
         return $user->refresh();
