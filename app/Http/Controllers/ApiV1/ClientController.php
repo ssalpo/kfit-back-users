@@ -33,6 +33,18 @@ class ClientController extends Controller
      *     path="/clients",
      *     tags={"Clients"},
      *     summary="Display a listing of the resource",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="platformType",
+     *         required=false,
+     *         @OA\Schema(type="int"),
+     *     ),
      *     @OA\Response(
      *          response=200,
      *          description="OK",
