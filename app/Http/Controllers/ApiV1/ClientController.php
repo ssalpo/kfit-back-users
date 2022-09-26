@@ -45,7 +45,7 @@ class ClientController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return ClientResource::collection(
-            Client::with('orders')->paginate()
+            Client::with('orders')->filter(request())->paginate()
         );
     }
 
