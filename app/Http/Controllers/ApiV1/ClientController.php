@@ -36,12 +36,16 @@ class ClientController extends Controller
      *     @OA\Parameter(
      *         in="path",
      *         name="query",
+     *         description="Enter client name, email or phone",
+     *         example="some@mail.ru or 79521621026",
      *         required=false,
      *         @OA\Schema(type="string"),
      *     ),
      *     @OA\Parameter(
      *         in="path",
      *         name="platformType",
+     *         description="Enter platform type 1=Autoweboffice, 2=Gurucan",
+     *         example="1 or 2",
      *         required=false,
      *         @OA\Schema(type="int"),
      *     ),

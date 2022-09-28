@@ -41,10 +41,10 @@ class ProductRequest
 
     /**
      * @OA\Property(
-     *     title="expired_at"
+     *     title="expired_at",
      * )
      *
-     * @var string
+     * @var date
      */
     private $expired_at;
 }
