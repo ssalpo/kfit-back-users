@@ -65,4 +65,22 @@ class OrderResource
      * @var date
      */
     private $expired_at;
+
+    /**
+     * @OA\Property(
+     *     title="platform"
+     * )
+     *
+     * @var int
+     */
+    private $platform;
+
+    /**
+     * @OA\Property(
+     *     title="platform_id"
+     * )
+     *
+     * @var string
+     */
+    private $platform_id;
 }
