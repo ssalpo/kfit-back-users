@@ -53,7 +53,7 @@ class OrderResource
      *     title="paid_at"
      * )
      *
-     * @var string
+     * @var date
      */
     private $paid_at;
 
@@ -62,7 +62,7 @@ class OrderResource
      *     title="expired_at"
      * )
      *
-     * @var string
+     * @var date
      */
     private $expired_at;
 }

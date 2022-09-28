@@ -17,13 +17,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesTableSeeder::class);
-
-        User::factory(10)->create()->each(function (User $user) {
-            $user->assignRole(Role::inRandomOrder()->first());
-        });
-
-        \App\Models\Client::factory(10)->create();
-
-        Product::factory(10)->create();
+        $this->call(UsersTableSeeder::class);
     }
 }

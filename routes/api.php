@@ -6,7 +6,7 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
     // User rotes
     Route::get('/users/me', 'UserController@me');
     Route::post('/users/{user}/reset-password', 'UserController@resetPassword');
-    Route::apiResource('/users', 'UserController')->except(['destroy']);
+    Route::apiResource('/users', 'UserController');
 
     // File routes
     Route::post('/files/upload', 'FileController@upload');
@@ -15,7 +15,7 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
 
     // Client routes
     Route::get('/clients/me', 'ClientController@me');
-    Route::apiResource('/clients', 'ClientController')->except(['destroy']);
+    Route::apiResource('/clients', 'ClientController');
 
     // Product routes
     Route::apiResource('products', 'ProductController');
