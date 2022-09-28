@@ -54,6 +54,11 @@ class Client extends Authenticatable
         $this->attributes['password'] = Hash::make($this->phone);
     }
 
+    public function platformClients(): HasMany
+    {
+        return $this->hasMany(PlatformClient::class);
+    }
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
