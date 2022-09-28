@@ -155,4 +155,34 @@ class ClientController extends Controller
             $this->clientService->update($client, $request->validated())
         );
     }
+
+    /**
+     * Remove the specified client from storage.
+     *
+     * @OA\Delete(
+     *     path="/clients",
+     *     tags={"Clients"},
+     *     summary="Remove the specified client from storage.",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *     )
+     * )
+     *
+     * @param Client $client
+     * @return ClientResource
+     */
+    public function destroy(Client $client): ClientResource
+    {
+        $client->delete();
+
+        return new ClientResource($client);
+    }
 }

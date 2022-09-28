@@ -168,6 +168,36 @@ class UserController extends Controller
     }
 
     /**
+     * Remove the specified user from storage.
+     *
+     * @OA\Delete(
+     *     path="/users",
+     *     tags={"Users"},
+     *     summary="Remove the specified user from storage.",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="int"),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/UserResource")
+     *     )
+     * )
+     *
+     * @param User $user
+     * @return UserResource
+     */
+    public function destroy(User $user): UserResource
+    {
+        $user->delete();
+
+        return new UserResource($user);
+    }
+
+    /**
      * Reset user password
      *
      * @OA\Post(
