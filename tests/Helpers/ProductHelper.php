@@ -6,7 +6,7 @@ use App\Models\Product;
 
 class ProductHelper
 {
-    public static function getRandomUser()
+    public static function getRandomProduct()
     {
         Product::factory(5)->create();
 

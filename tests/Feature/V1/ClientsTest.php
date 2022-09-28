@@ -86,7 +86,7 @@ class ClientsTest extends TestCase
     {
         UserHelper::actAsAdmin();
 
-        $client = ClientHelper::getRandomUser();
+        $client = ClientHelper::getRandomClient();
 
         $response = $this->getJson('/api/v1/clients/' . $client->id);
 
@@ -103,7 +103,7 @@ class ClientsTest extends TestCase
     {
         UserHelper::actAsAdmin();
 
-        $client = ClientHelper::getRandomUser();
+        $client = ClientHelper::getRandomClient();
 
         $form = [
             'name' => 'Test client name updated',
@@ -129,7 +129,7 @@ class ClientsTest extends TestCase
     {
         ClientHelper::actAsClient();
 
-        $client = ClientHelper::getRandomUser();
+        $client = ClientHelper::getRandomClient();
 
         // List
         $this->getJson('/api/v1/users/')
@@ -155,7 +155,7 @@ class ClientsTest extends TestCase
     {
         UserHelper::actAsAdminWithGuestRole();
 
-        $client = ClientHelper::getRandomUser();
+        $client = ClientHelper::getRandomClient();
 
         // Show
         $this->getJson('/api/v1/clients/' . $client->id)

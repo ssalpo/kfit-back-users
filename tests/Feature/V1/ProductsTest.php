@@ -65,7 +65,7 @@ class ProductsTest extends TestCase
     {
         UserHelper::actAsAdmin();
 
-        $product = ProductHelper::getRandomUser();
+        $product = ProductHelper::getRandomProduct();
 
         $response = $this->getJson('/api/v1/products/' . $product->id);
 
@@ -82,7 +82,7 @@ class ProductsTest extends TestCase
     {
         UserHelper::actAsAdmin();
 
-        $product = ProductHelper::getRandomUser();
+        $product = ProductHelper::getRandomProduct();
 
         $form = [
             'title' => 'Some product title updated'
@@ -105,7 +105,7 @@ class ProductsTest extends TestCase
     {
         UserHelper::actAsAdminWithGuestRole();
 
-        $product = ProductHelper::getRandomUser();
+        $product = ProductHelper::getRandomProduct();
 
         // Add
         $this->postJson('/api/v1/products')

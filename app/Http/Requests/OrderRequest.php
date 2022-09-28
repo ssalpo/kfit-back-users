@@ -26,7 +26,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'client_id' => 'required|numeric|exists:clients,id',
-            'product_id' => 'required|numeric|exists:clients,id',
+            'product_id' => 'required|numeric|exists:products,id',
             'price' => 'required|numeric',
             'status' => 'required|numeric|in:' . implode(',', Order::ALL_STATUSES),
             'expired_at' => 'nullable|date_format:Y-m-d',

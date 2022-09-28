@@ -125,7 +125,7 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order): OrderResource
     {
-        $order->update($request->valdated());
+        $order->update($request->validated());
 
         return new OrderResource(
             $order->refresh()

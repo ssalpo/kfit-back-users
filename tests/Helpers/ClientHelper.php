@@ -7,7 +7,7 @@ use Laravel\Passport\Passport;
 
 class ClientHelper
 {
-    public static function getRandomUser()
+    public static function getRandomClient()
     {
         Client::factory(5)->create();
 

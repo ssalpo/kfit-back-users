@@ -21,6 +21,6 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
     Route::apiResource('products', 'ProductController');
 
     // Order routes
-    Route::apiResource('/orders/change-status', 'OrderController@changeStatus');
+    Route::post('/orders/{order}/change-status', 'OrderController@changeStatus');
     Route::apiResource('orders', 'OrderController');
 });

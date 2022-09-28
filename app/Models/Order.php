@@ -20,6 +20,7 @@ class Order extends Model
     ];
 
     protected $casts = [
+        'price' => 'double',
         'paid_at' => 'datetime',
         'expired_at' => 'datetime',
     ];
