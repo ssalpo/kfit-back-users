@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Utils\Formatters\PhoneFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
@@ -14,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Client extends Authenticatable
 {
-    use HasApiTokens, HasRoles, HasFactory, Notifiable;
+    use HasApiTokens, HasRoles, HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
