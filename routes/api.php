@@ -13,7 +13,8 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
     Route::get('/files/{model}/{folder}/{filename}', 'FileController@file');
     Route::get('/files/image/{model}/{folder}/{filename}/{width}/{height}', 'FileController@image');
 
-    Route::apiResource('/clients/', 'ClientController')->except(['destroy']);
+    // Client routes
+    Route::apiResource('/clients', 'ClientController')->except(['destroy']);
 
     // Product routes
     Route::apiResource('products', 'ProductController');

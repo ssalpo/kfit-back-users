@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientStoreRequest;
+use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use App\Services\ClientService;
@@ -21,7 +22,7 @@ class ClientController extends Controller
      */
     public function __construct(ClientService $clientService)
     {
-        $this->middleware('role:admin');
+        $this->middleware('role:admin')->except(['index']);
 
         $this->clientService = $clientService;
     }
@@ -129,11 +130,11 @@ class ClientController extends Controller
      *     )
      * )
      *
-     * @param ClientStoreRequest $request
+     * @param ClientUpdateRequest $request
      * @param int $client
      * @return ClientResource
      */
-    public function update(ClientStoreRequest $request, int $client): ClientResource
+    public function update(ClientUpdateRequest $request, int $client): ClientResource
     {
         return new ClientResource(
             $this->clientService->update($client, $request->validated())

@@ -12,6 +12,8 @@ class AdminUserTest extends TestCase
 {
     use RefreshDatabase;
 
+    const RESOURCE_STRUCTURE = ['id', 'name', 'email', 'avatar', 'active', 'roles'];
+
     /**
      * @return void
      */
@@ -23,7 +25,7 @@ class AdminUserTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => ['id', 'name', 'email', 'avatar', 'active', 'roles']
+                'data' => self::RESOURCE_STRUCTURE
             ]);
     }
 
@@ -40,7 +42,7 @@ class AdminUserTest extends TestCase
             ->assertJsonStructure(['data', 'links', 'meta'])
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'name', 'email', 'avatar', 'active', 'roles']
+                    '*' => self::RESOURCE_STRUCTURE
                 ]
             ]);
     }
@@ -58,7 +60,7 @@ class AdminUserTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => ['id', 'name', 'email', 'avatar', 'active', 'roles']
+                'data' => self::RESOURCE_STRUCTURE
             ]);
     }
 
@@ -71,11 +73,8 @@ class AdminUserTest extends TestCase
 
         $user = UserHelper::getRandomUser();
 
-        $this->getJson('/api/v1/users/')
-            ->assertStatus(403);
-
         // List
-        $this->getJson('/api/v1/users/' . $user->id)
+        $this->getJson('/api/v1/users/')
             ->assertStatus(403);
 
         // Show
@@ -150,7 +149,7 @@ class AdminUserTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => ['id', 'name', 'email', 'avatar', 'active', 'roles']
+                'data' => self::RESOURCE_STRUCTURE
             ])
             ->assertJsonPath('data.name', $form['name'])
             ->assertJsonPath('data.id', $user->id);
