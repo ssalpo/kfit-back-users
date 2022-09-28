@@ -20,6 +20,25 @@ class ClientsTest extends TestCase
     /**
      * @return void
      */
+    public function test_clients_can_see_their_profile()
+    {
+        ClientHelper::actAsClient();
+
+        $response = $this->getJson('/api/v1/clients/me');
+
+        $resource = self::RESOURCE_STRUCTURE;
+
+        array_pop($resource);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => $resource
+            ]);
+    }
+
+    /**
+     * @return void
+     */
     public function test_admin_can_see_list_of_clients()
     {
         UserHelper::actAsAdmin();

@@ -8,6 +8,7 @@ use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use App\Services\ClientService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClientController extends Controller
@@ -22,9 +23,33 @@ class ClientController extends Controller
      */
     public function __construct(ClientService $clientService)
     {
-        $this->middleware('role:admin')->except(['index']);
+        $this->middleware('role:admin')->except(['index', 'me']);
 
         $this->clientService = $clientService;
+    }
+
+    /**
+     * Returns the data of the current login client
+     *
+     * @OA\Get(
+     *     path="/clients/me",
+     *     tags={"Clients"},
+     *     summary="Returns the data of the currently logged in client",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *      )
+     * )
+     *
+     * @param Request $request
+     * @return ClientResource
+     */
+    public function me(Request $request): ClientResource
+    {
+        return new ClientResource(
+            $request->user()
+        );
     }
 
     /**

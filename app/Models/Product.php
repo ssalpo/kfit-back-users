@@ -17,6 +17,10 @@ class Product extends Model
         'expired_at'
     ];
 
+    protected $casts = [
+        'expired_at' => 'datetime'
+    ];
+
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);
