@@ -70,7 +70,7 @@ class OrdersTest extends TestCase
      */
     public function test_admin_can_see_order_info_by_id()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed --class=DataForTestingSeeder');
 
         UserHelper::actAsAdmin();
 
@@ -89,7 +89,7 @@ class OrdersTest extends TestCase
      */
     public function test_admin_can_edit_product_by_id()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed --class=DataForTestingSeeder');
 
         UserHelper::actAsAdmin();
 
@@ -117,7 +117,7 @@ class OrdersTest extends TestCase
      */
     public function test_admin_can_change_order_status_by_id()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed --class=DataForTestingSeeder');
 
         UserHelper::actAsAdmin();
 
@@ -141,7 +141,7 @@ class OrdersTest extends TestCase
      */
     public function test_user_with_role_guest_can_not_work_with_orders_data()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed --class=DataForTestingSeeder');
 
         UserHelper::actAsAdminWithGuestRole();
 
