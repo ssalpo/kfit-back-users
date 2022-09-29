@@ -15,5 +15,5 @@
 
 #### Run import from external CRM
 
-- settings queue to channel ```php artisan queuq --queue=crmimport```
+- settings queue to channel ```php artisan queue --queue=crmimport```
 - run or add cron job for command ```php artisan kfit:import:crm``` for example runs every day, also here you can use ```--except=clients,products``` params to except methods used only for testing
