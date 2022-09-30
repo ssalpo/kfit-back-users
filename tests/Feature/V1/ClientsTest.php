@@ -5,7 +5,9 @@ namespace Tests\Feature\V1;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Tests\Helpers\ClientHelper;
+use Tests\Helpers\OrderHelper;
 use Tests\Helpers\UserHelper;
 use Tests\TestCase;
 
@@ -168,5 +170,27 @@ class ClientsTest extends TestCase
         // Edit
         $this->putJson('/api/v1/clients/' . $client->id)
             ->assertStatus(403);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_clients_can_see_their_ordered_products()
+    {
+        Artisan::call('db:seed --class=DataForTestingSeeder');
+
+        ClientHelper::actAsClient();
+
+        $clientId = OrderHelper::getRandomClientId();
+
+        $response = $this->getJson('/api/v1/clients/' . $clientId . '/products');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure(['data', 'links', 'meta'])
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ProductsTest::RESOURCE_STRUCTURE
+                ]
+            ]);
     }
 }

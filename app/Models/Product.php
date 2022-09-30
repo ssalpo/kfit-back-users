@@ -24,6 +24,20 @@ class Product extends Model
         'expired_at' => 'datetime'
     ];
 
+    /**
+     * Скоуп для фильтрации продуктов пользователя
+     *
+     * @param $q
+     * @param $id
+     * @return void
+     */
+    public function scopeForUser($q, $id = null)
+    {
+        $q->whereHas('order', function ($qb) use ($id) {
+            $qb->whereClientId(auth()->id() ?? $id);
+        });
+    }
+
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);

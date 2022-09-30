@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -25,5 +26,7 @@ class DataForTestingSeeder extends Seeder
         \App\Models\Client::factory(10)->create();
 
         Product::factory(10)->create();
+
+        Order::factory(30)->create();
     }
 }
