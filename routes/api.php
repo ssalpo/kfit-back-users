@@ -13,12 +13,14 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
     Route::get('/files/{model}/{folder}/{filename}', 'FileController@file');
     Route::get('/files/image/{model}/{folder}/{filename}/{width}/{height}', 'FileController@image');
 
-    Route::apiResource('/clients/', 'ClientController');
+    // Client routes
+    Route::get('/clients/me', 'ClientController@me');
+    Route::apiResource('/clients', 'ClientController');
 
     // Product routes
     Route::apiResource('products', 'ProductController');
 
     // Order routes
-    Route::apiResource('/orders/change-status', 'OrderController@changeStatus');
+    Route::post('/orders/{order}/change-status', 'OrderController@changeStatus');
     Route::apiResource('orders', 'OrderController');
 });

@@ -14,6 +14,9 @@ class TempFileResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_filename' => $this->user_filename,
+        ];
     }
 }
