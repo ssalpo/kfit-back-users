@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:255',
-            'description' => 'required',
+            'description' => 'nullable',
             'price' => 'nullable|numeric',
             'expired_at' => 'nullable|date_format:Y-m-d'
         ];

@@ -29,6 +29,7 @@ class ClientStoreRequest extends FormRequest
             'active' => 'required|boolean',
             'email' => 'required|email|max:255|unique:users',
             'avatar' => 'nullable|max:255',
+            'password' => 'required|min:6|max:255'
         ];
     }
 }

@@ -27,8 +27,9 @@ class ClientUpdateRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'phone' => 'required',
             'active' => 'required|boolean',
-            'email' => 'required|email|max:255|unique:clients,email,' . $this->user,
+            'email' => 'required|email|max:255|unique:clients,email,' . $this->client,
             'avatar' => 'nullable|max:255',
+            'password' => 'nullable|min:6|max:255'
         ];
     }
 }
