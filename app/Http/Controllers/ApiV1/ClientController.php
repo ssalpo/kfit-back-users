@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Client;
+use App\Models\Product;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -23,7 +25,7 @@ class ClientController extends Controller
      */
     public function __construct(ClientService $clientService)
     {
-        $this->middleware('role:admin')->except(['index', 'me']);
+        $this->middleware('role:admin')->except(['index', 'me', 'products']);
 
         $this->clientService = $clientService;
     }
@@ -88,6 +90,30 @@ class ClientController extends Controller
     {
         return ClientResource::collection(
             Client::with('orders')->filter(request())->paginate()
+        );
+    }
+
+
+    /**
+     * Returns a list of client products
+     *
+     * @OA\Get(
+     *     path="/clients/{client}/products",
+     *     tags={"Clients"},
+     *     summary="Returns a list of client products",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *      )
+     * )
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function products(): AnonymousResourceCollection
+    {
+        return ProductResource::collection(
+            Product::forUser()->paginate()
         );
     }
 

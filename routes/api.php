@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth:api,api-clients']], function () {
     Route::get('/files/image/{model}/{folder}/{filename}/{width}/{height}', 'FileController@image');
 
     // Client routes
+    Route::get('/clients/{client}/products', 'ClientController@products');
     Route::get('/clients/me', 'ClientController@me');
     Route::apiResource('/clients', 'ClientController');
 

@@ -12,4 +12,9 @@ class OrderHelper
 
         return Order::inRandomOrder()->first();
     }
+
+    public static function getRandomClientId()
+    {
+        return Order::inRandomOrder()->first()->client_id;
+    }
 }
