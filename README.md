@@ -15,11 +15,13 @@
 
 #### Run import from external CRM
 
-- settings queue to channel ```php artisan queue:work --queue=crmimport```
+- configure supervisor in prod or dev server `https://www.zentao.pm/blog/use-Supervisor-to-manage-Laravel-queue-416.html`
+- settings queue to channel only in local development ```php artisan queue:work --queue=crmimport```
 - run or add cron job for command ```php artisan kfit:import:crm``` for example runs every day, also here you can use ```--except=clients,products``` params to except methods used only for testing
 
 #### Run test
 - !!! for every command that you run from command line for testing DB you need to add ```--env=testing``` option
 - copy ```.env.testing.example``` to ```.env.testing``` add need settings like email, database connection
+- run key generation ```php artisan key:generate --env=testing```
 - run migrations if need ```php artisan migrate --env=testing```
 - run test with command ```php artisan test --env=testing```
