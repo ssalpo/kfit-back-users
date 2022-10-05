@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:api,api-clients']], function () {
     // User rotes
+    Route::get('/users/goods/{type}', 'UserController@relatedGoodsByType');
     Route::get('/users/me', 'UserController@me');
     Route::post('/users/{user}/reset-password', 'UserController@resetPassword');
     Route::apiResource('/users', 'UserController');

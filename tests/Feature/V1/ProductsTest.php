@@ -14,7 +14,7 @@ class ProductsTest extends TestCase
     use RefreshDatabase;
 
     const RESOURCE_STRUCTURE = [
-        'id', 'title', 'description', 'price', 'products', 'expired_at',
+        'id', 'title', 'description', 'price', 'goods', 'expired_at',
     ];
 
     /**
@@ -47,6 +47,9 @@ class ProductsTest extends TestCase
             'description' => 'Some product description',
             'price' => 2000,
             'expired_at' => now()->addMonth()->format('Y-m-d'),
+            'goods' => [
+                ['related_id' => 1, 'related_type' => 1]
+            ]
         ];
 
         $response = $this->postJson('/api/v1/products', $form);
