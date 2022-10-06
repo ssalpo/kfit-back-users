@@ -19,7 +19,7 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'price' => $this->price,
-            'products' => [],
+            'goods' => $this->goods,
             'expired_at' => $this->when($this->expired_at, function () {
                 return $this->expired_at->format('Y-m-d');
             })

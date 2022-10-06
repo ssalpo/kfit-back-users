@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Resources\UserResource;
+use App\Models\ProductGood;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -22,7 +24,7 @@ class UserController extends Controller
     {
         $this->userService = $userService;
 
-        $this->middleware('role:admin')->except(['me']);
+        $this->middleware('role:admin')->except(['me', 'relatedGoodsByType']);
     }
 
     /**
@@ -223,5 +225,30 @@ class UserController extends Controller
     public function resetPassword(int $user)
     {
         $this->userService->resetPassword($user);
+    }
+
+    /**
+     * List of related goods for current user
+     *
+     * @OA\Get(
+     *     path="/users/goods/{type}",
+     *     tags={"Users"},
+     *     summary="List of related goods for current user",
+     *     @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductGoodResource")
+     *      )
+     * )
+     * @param int $type
+     * @return JsonResponse
+     */
+    public function relatedGoodsByType(int $type): JsonResponse
+    {
+        $goods = ProductGood::whereRelatedType($type)->whereHas('product.order', function($q) {
+            $q->whereClientId(auth()->id());
+        })->get();
+
+        return response()->json($goods);
     }
 }

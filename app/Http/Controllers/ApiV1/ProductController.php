@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    /**
+     * @var ProductService
+     */
+    private $productService;
+
+    public function __construct(ProductService $productService)
     {
         $this->middleware('role:admin')->except(['index', 'show']);
+
+        $this->productService = $productService;
     }
 
     /**
@@ -34,7 +42,7 @@ class ProductController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return ProductResource::collection(
-            Product::paginate(10)
+            Product::with('goods')->paginate(10)
         );
     }
 
@@ -64,7 +72,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request): ProductResource
     {
         return new ProductResource(
-            Product::create($request->validated())
+            $this->productService->add(
+                $request->validated()
+            )
         );
     }
 
@@ -93,6 +103,8 @@ class ProductController extends Controller
      */
     public function show(Product $product): ProductResource
     {
+        $product->load('goods');
+
         return new ProductResource($product);
     }
 
@@ -117,15 +129,16 @@ class ProductController extends Controller
      * )
      *
      * @param ProductRequest $request
-     * @param Product $product
+     * @param int $product
      * @return ProductResource
      */
-    public function update(ProductRequest $request, Product $product): ProductResource
+    public function update(ProductRequest $request, int $product): ProductResource
     {
-        $product->update($request->validated());
-
         return new ProductResource(
-            $product->refresh()
+            $this->productService->update(
+                $product,
+                $request->validated()
+            )
         );
     }
 
