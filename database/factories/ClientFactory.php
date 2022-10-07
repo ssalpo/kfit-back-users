@@ -15,9 +15,12 @@ class ClientFactory extends Factory
      */
     public function definition()
     {
+        $phone = $this->faker->e164PhoneNumber();
+
         return [
             'name' => $this->faker->name(),
-            'phone' => $this->faker->e164PhoneNumber(),
+            'phone' => $phone,
+            'phone_code' => '1234',
             'email' => $this->faker->unique()->safeEmail(),
             'password' => 'password',
             'remember_token' => Str::random(10),
