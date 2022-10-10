@@ -20,6 +20,7 @@ class Client extends Authenticatable
     protected $fillable = [
         'name',
         'phone',
+        'phone_code',
         'email',
         'avatar',
         'active',
@@ -50,17 +51,6 @@ class Client extends Authenticatable
         });
     }
 
-    /**
-     * Find the user instance for the given username.
-     *
-     * @param string $username
-     * @return \App\Models\User
-     */
-    public function findForPassport($username)
-    {
-        return $this->where('phone', $username)->first();
-    }
-
     public function setPhoneAttribute($value)
     {
         $this->attributes['phone'] = PhoneFormatter::onlyNumbers($value);
@@ -68,7 +58,7 @@ class Client extends Authenticatable
 
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = Hash::make($this->phone);
+        $this->attributes['password'] = Hash::make($value);
     }
 
     public function platformClients(): HasMany
@@ -79,5 +69,27 @@ class Client extends Authenticatable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Find the user instance for the given username and password.
+     *
+     * @param string $username
+     * @param string $password
+     * @return Client|null
+     */
+    public function findAndValidateForPassport(string $username, string $password)
+    {
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $client = $this->where('email', $username)->first();
+
+            return Hash::check($password, $client->password)
+                ? $client
+                : null;
+        }
+
+        return $this->where('phone', $username)
+            ->where('phone_code', $password)
+            ->first();
     }
 }
