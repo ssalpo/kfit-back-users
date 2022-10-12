@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Client;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Client resource",
- *     @OA\Xml(
- *         name="ClientResource"
- *     )
+ *     title="Client resource"
  * )
  */
 class ClientResource

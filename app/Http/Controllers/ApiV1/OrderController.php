@@ -9,6 +9,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use OpenApi\Annotations as OA;
 
 class OrderController extends Controller
 {
@@ -80,7 +81,7 @@ class OrderController extends Controller
      *     @OA\Response(
      *          response=200,
      *          description="OK",
-     *          @OA\JsonContent(ref="#/components/schemas/OrderResource")
+     *          @OA\JsonContent(ref="#/components/schemas/OrderCollectionResource")
      *      )
      * )
      *

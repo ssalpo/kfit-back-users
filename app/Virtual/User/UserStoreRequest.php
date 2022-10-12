@@ -2,12 +2,11 @@
 
 namespace App\Virtual\User;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="User store request",
- *     @OA\Xml(
- *         name="UserStoreRequest"
- *     )
+ *     title="User store request"
  * )
  */
 class UserStoreRequest
