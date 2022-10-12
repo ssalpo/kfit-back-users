@@ -40,7 +40,7 @@ class ClientService
         if ($isAvatarChanged) {
             $this->tempFileService->moveFromTmpFolder(TempFile::FOLDER_CLIENT_AVATAR, $client->avatar);
 
-            $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_CLIENT_AVATAR, $oldAvatar);
+            if($oldAvatar) $this->tempFileService->removeFileFromFolder(TempFile::FOLDER_CLIENT_AVATAR, $oldAvatar);
         }
 
         return $client->refresh();
