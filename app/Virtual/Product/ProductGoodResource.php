@@ -13,7 +13,8 @@ class ProductGoodResource
 {
     /**
      * @OA\Property(
-     *     title="product_id"
+     *     title="product_id",
+     *     description="Related product id"
      * )
      *
      * @var int
@@ -22,7 +23,8 @@ class ProductGoodResource
 
     /**
      * @OA\Property(
-     *     title="related_id"
+     *     title="related_id",
+     *     description="Related (courses, workouts) id from video service."
      * )
      *
      * @var int
@@ -31,7 +33,9 @@ class ProductGoodResource
 
     /**
      * @OA\Property(
-     *     title="related_type"
+     *     title="related_type",
+     *     description="Related model types. Marathon=1, COURSE=2, WORKOUT=3",
+     *     example="2"
      * )
      *
      * @var int
