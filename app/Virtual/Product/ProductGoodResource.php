@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Product;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Product goods resource",
- *     @OA\Xml(
- *         name="ProductGoodResource"
- *     )
+ *     title="Product goods resource"
  * )
  */
 class ProductGoodResource

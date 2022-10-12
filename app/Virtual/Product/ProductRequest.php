@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Product;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Product store request",
- *     @OA\Xml(
- *         name="ProductRequest"
- *     )
+ *     title="Product store request"
  * )
  */
 class ProductRequest

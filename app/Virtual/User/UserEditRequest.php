@@ -2,12 +2,11 @@
 
 namespace App\Virtual\User;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="User edit request",
- *     @OA\Xml(
- *         name="UserEditRequest"
- *     )
+ *     title="User edit request"
  * )
  */
 class UserEditRequest

@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Product;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Product resource",
- *     @OA\Xml(
- *         name="ProductResource"
- *     )
+ *     title="Product resource"
  * )
  */
 class ProductResource
@@ -47,4 +46,14 @@ class ProductResource
      * @var string
      */
     private $expired_at;
+
+    /**
+     * @OA\Property(
+     *     title="goods",
+     *     @OA\Items(ref="#/components/schemas/ProductGoodResource")
+     * )
+     *
+     * @var array
+     */
+    private $goods;
 }

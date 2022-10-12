@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use OpenApi\Annotations as OA;
 
 class ClientController extends Controller
 {
@@ -80,7 +81,7 @@ class ClientController extends Controller
      *     @OA\Response(
      *          response=200,
      *          description="OK",
-     *          @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *          @OA\JsonContent(ref="#/components/schemas/ClientCollectionResource")
      *      )
      * )
      *
@@ -104,7 +105,7 @@ class ClientController extends Controller
      *     @OA\Response(
      *          response=200,
      *          description="OK",
-     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *          @OA\JsonContent(ref="#/components/schemas/ProductCollectionResource")
      *      )
      * )
      *

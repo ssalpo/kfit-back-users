@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Order;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Order store request",
- *     @OA\Xml(
- *         name="OrderRequest"
- *     )
+ *     title="Order store request"
  * )
  */
 class OrderRequest

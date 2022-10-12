@@ -2,12 +2,11 @@
 
 namespace App\Virtual\User;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="User resource",
- *     @OA\Xml(
- *         name="UserResource"
- *     )
+ *     title="User resource"
  * )
  */
 class UserResource

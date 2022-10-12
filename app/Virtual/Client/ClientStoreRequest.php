@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Client;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Client store request",
- *     @OA\Xml(
- *         name="ClientStoreRequest"
- *     )
+ *     title="Client store request"
  * )
  */
 class ClientStoreRequest

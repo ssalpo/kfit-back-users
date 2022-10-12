@@ -2,12 +2,11 @@
 
 namespace App\Virtual\Order;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
- *     title="Order change status request",
- *     @OA\Xml(
- *         name="OrderChangeStatusRequest"
- *     )
+ *     title="Order change status request"
  * )
  */
 class OrderChangeStatusRequest
